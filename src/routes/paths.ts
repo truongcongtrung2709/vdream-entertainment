@@ -52,6 +52,7 @@ export const paths = {
   },
   // AUTH
   auth: {
+    login:`${ROOTS.AUTH}/login`,
     amplify: {
       login: `${ROOTS.AUTH}/amplify/login`,
       verify: `${ROOTS.AUTH}/amplify/verify`,
@@ -175,6 +176,27 @@ export const paths = {
         details: `${ROOTS.DASHBOARD}/tour/${MOCK_ID}`,
         edit: `${ROOTS.DASHBOARD}/tour/${MOCK_ID}/edit`,
       },
+    },
+    about:{
+      root: `${ROOTS.DASHBOARD}/about-us`,
+    },
+    employee:{
+      root: `${ROOTS.DASHBOARD}/employee`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/employee/${id}`,
+      new: `${ROOTS.DASHBOARD}/employee/new`
+    },
+    store:{
+      root: `${ROOTS.DASHBOARD}/store`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/store/${id}`,
+      new: `${ROOTS.DASHBOARD}/store/new`
+    },
+    collaborator:{
+      root: `${ROOTS.DASHBOARD}/collaborator`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/collaborator/${id}`,
+      new: `${ROOTS.DASHBOARD}/collaborator/new`
+    },
+    changePassword:{
+      root: `${ROOTS.DASHBOARD}/change-password`,
     },
   },
 };

@@ -14,8 +14,7 @@ function NavSectionVertical({ data, slotProps, ...other }: NavProps) {
     <Stack component="nav" id="nav-section-vertical" {...other}>
       {data.map((group, index) => (
         <Group
-          key={group.subheader || index}
-          subheader={group.subheader}
+          key={index}
           items={group.items}
           slotProps={slotProps}
         />

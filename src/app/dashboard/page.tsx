@@ -1,4 +1,4 @@
-import { OverviewAppView } from 'src/sections/overview/app/view';
+import IntroductionView from 'src/sections/introduction/view/introduction-view';
 
 // ----------------------------------------------------------------------
 
@@ -7,5 +7,5 @@ export const metadata = {
 };
 
 export default function OverviewAppPage() {
-  return <OverviewAppView />;
+  return <IntroductionView />;
 }

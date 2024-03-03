@@ -4,16 +4,34 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
-import { paths } from 'src/routes/paths';
 
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 
 import Label from 'src/components/label';
+import { useAuthContext } from 'src/auth/hooks';
+import { useRouter } from 'next/navigation';
+import { useSnackbar } from 'notistack';
 
 // ----------------------------------------------------------------------
 
 export default function NavUpgrade() {
   const { user } = useMockedUser();
+
+  const router = useRouter();
+
+  const { logout } = useAuthContext();
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.replace('/');
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar('Unable to logout!', { variant: 'error' });
+    }
+  };
 
   return (
     <Stack
@@ -52,8 +70,8 @@ export default function NavUpgrade() {
           </Typography>
         </Stack>
 
-        <Button variant="contained" href={paths.minimalUI} target="_blank" rel="noopener">
-          Upgrade to Pro
+        <Button variant="contained" onClick={handleLogout} >
+          Đăng xuất
         </Button>
       </Stack>
     </Stack>

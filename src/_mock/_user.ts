@@ -152,6 +152,8 @@ export const _userList = [...Array(20)].map((_, index) => ({
   country: countries[index + 1].label,
   avatarUrl: _mock.image.avatar(index),
   phoneNumber: _mock.phoneNumber(index),
+  createAt: _mock.time(index),
+  description: "Hello",
   status:
     (index % 2 && 'pending') || (index % 3 && 'banned') || (index % 4 && 'rejected') || 'active',
 }));

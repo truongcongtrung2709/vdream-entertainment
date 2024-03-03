@@ -58,7 +58,6 @@ export type NavGroupProps = {
 
 export type NavProps = StackProps & {
   data: {
-    subheader: string;
     items: NavItemBaseProps[];
   }[];
   slotProps?: SlotProps;
