@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
 import Paper from '@mui/material/Paper';

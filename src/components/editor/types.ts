@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactQuillProps } from 'react-quill';
 
 import { Theme, SxProps } from '@mui/material/styles';

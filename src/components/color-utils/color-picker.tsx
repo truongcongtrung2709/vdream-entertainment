@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { forwardRef, useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';

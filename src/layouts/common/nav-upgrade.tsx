@@ -1,16 +1,17 @@
+import { useSnackbar } from 'notistack';
+import { useRouter } from 'next/navigation';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
-
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 
-import Label from 'src/components/label';
 import { useAuthContext } from 'src/auth/hooks';
-import { useRouter } from 'next/navigation';
-import { useSnackbar } from 'notistack';
+
+import Label from 'src/components/label';
 
 // ----------------------------------------------------------------------
 
@@ -70,7 +71,7 @@ export default function NavUpgrade() {
           </Typography>
         </Stack>
 
-        <Button variant="contained" onClick={handleLogout} >
+        <Button variant="contained" onClick={handleLogout}>
           Đăng xuất
         </Button>
       </Stack>

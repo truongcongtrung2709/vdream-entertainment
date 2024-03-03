@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { memo, forwardRef } from 'react';
 
 import Box from '@mui/material/Box';

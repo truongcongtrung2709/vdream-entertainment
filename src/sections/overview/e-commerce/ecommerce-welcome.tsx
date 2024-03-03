@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Stack from '@mui/material/Stack';
 import { CardProps } from '@mui/material/Card';
 import Typography from '@mui/material/Typography';

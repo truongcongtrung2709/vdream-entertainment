@@ -3,16 +3,12 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMemo, useEffect, useCallback } from 'react';
 
-import Chip from '@mui/material/Chip';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Switch from '@mui/material/Switch';
 import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
@@ -20,19 +16,10 @@ import { useRouter } from 'src/routes/hooks';
 import { useBoolean } from 'src/hooks/use-boolean';
 import { useResponsive } from 'src/hooks/use-responsive';
 
-import { _tags } from 'src/_mock';
-
-import { CustomFile } from 'src/components/upload';
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFEditor,
-  RHFUpload,
-  RHFTextField,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 
 import { IPostItem } from 'src/types/blog';
-
 
 // ----------------------------------------------------------------------
 
@@ -82,13 +69,10 @@ export default function IntroductionViForm({ currentPost }: Props) {
 
   const {
     reset,
-    watch,
     setValue,
     handleSubmit,
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting },
   } = methods;
-
-  const values = watch();
 
   useEffect(() => {
     if (currentPost) {
@@ -150,8 +134,6 @@ export default function IntroductionViForm({ currentPost }: Props) {
 
             <RHFTextField name="description" label="Mô tả" multiline rows={3} />
 
-           
-
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Hình ảnh</Typography>
               <RHFUpload
@@ -167,15 +149,10 @@ export default function IntroductionViForm({ currentPost }: Props) {
     </>
   );
 
-
-     
-
-
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3} justifyContent="flex-end">
         {renderDetails}
-
 
         <LoadingButton
           type="submit"
@@ -187,8 +164,6 @@ export default function IntroductionViForm({ currentPost }: Props) {
           Cập nhât
         </LoadingButton>
       </Grid>
-
-      
     </FormProvider>
   );
 }

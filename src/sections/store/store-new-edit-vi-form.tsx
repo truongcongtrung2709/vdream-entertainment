@@ -1,33 +1,23 @@
 import * as Yup from 'yup';
-import { useMemo, useCallback, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMemo, useEffect, useCallback } from 'react';
 
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Switch from '@mui/material/Switch';
+import { CardHeader } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
-import { fData } from 'src/utils/format-number';
-
+import { useResponsive } from 'src/hooks/use-responsive';
 
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFTextField,
-  RHFUpload,
-  RHFUploadAvatar,
-} from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 
-import { useResponsive } from 'src/hooks/use-responsive';
-import { CardHeader } from '@mui/material';
 import { IProductItem } from 'src/types/product';
 
 // ----------------------------------------------------------------------
@@ -38,7 +28,7 @@ type Props = {
 
 export default function StoreNewEditViForm({ currentProduct }: Props) {
   const mdUp = useResponsive('up', 'md');
-  
+
   const router = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -67,14 +57,10 @@ export default function StoreNewEditViForm({ currentProduct }: Props) {
 
   const {
     reset,
-    watch,
-    control,
     setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
-  const values = watch();
 
   useEffect(() => {
     if (currentProduct) {
@@ -121,32 +107,32 @@ export default function StoreNewEditViForm({ currentProduct }: Props) {
             Chi tiết
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          tên sản phẩm, giá bán
+            tên sản phẩm, giá bán
           </Typography>
         </Grid>
       )}
 
       <Grid xs={12} md={8}>
         <Card>
-        {!mdUp && <CardHeader title="Details" />}
+          {!mdUp && <CardHeader title="Details" />}
 
-<Stack spacing={3} sx={{ p: 3 }}>
-  <RHFTextField name="name" label="Tên sản phẩm" />
+          <Stack spacing={3} sx={{ p: 3 }}>
+            <RHFTextField name="name" label="Tên sản phẩm" />
 
-  <RHFTextField name="price" label="Giá bán" />
+            <RHFTextField name="price" label="Giá bán" />
 
-  <RHFTextField name="youtubeLink" label="Link youtube" />
+            <RHFTextField name="youtubeLink" label="Link youtube" />
 
-  <Stack spacing={1.5}>
-    <Typography variant="subtitle2">Hình ảnh</Typography>
-    <RHFUpload
-      name="coverUrl"
-      maxSize={3145728}
-      onDrop={handleDrop}
-      onDelete={handleRemoveFile}
-    />
-  </Stack>
-</Stack>
+            <Stack spacing={1.5}>
+              <Typography variant="subtitle2">Hình ảnh</Typography>
+              <RHFUpload
+                name="coverUrl"
+                maxSize={3145728}
+                onDrop={handleDrop}
+                onDelete={handleRemoveFile}
+              />
+            </Stack>
+          </Stack>
         </Card>
       </Grid>
     </>
@@ -156,7 +142,6 @@ export default function StoreNewEditViForm({ currentProduct }: Props) {
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3} justifyContent="flex-end">
         {renderDetails}
-
 
         <LoadingButton
           type="submit"
@@ -168,8 +153,6 @@ export default function StoreNewEditViForm({ currentProduct }: Props) {
           {!currentProduct ? 'Tạo nhân viên' : 'Cập nhật'}
         </LoadingButton>
       </Grid>
-
-      
     </FormProvider>
   );
 }

@@ -1,25 +1,21 @@
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
+import { Typography } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
-import ListItemText from '@mui/material/ListItemText';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import Label from 'src/components/label';
+import { fDate } from 'src/utils/format-time';
+
 import Iconify from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-import { IUserItem } from 'src/types/user';
-import { fDate } from 'src/utils/format-time';
-import { Typography } from '@mui/material';
 import { IProductItem } from 'src/types/product';
-
 
 // ----------------------------------------------------------------------
 
@@ -38,11 +34,9 @@ export default function StoreTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { name, coverUrl, createdAt ,price} = row;
+  const { name, coverUrl, createdAt, price } = row;
 
   const confirm = useBoolean();
-
-  const quickEdit = useBoolean();
 
   const popover = usePopover();
 
@@ -56,23 +50,18 @@ export default function StoreTableRow({
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
           <Avatar alt={name} src={coverUrl} sx={{ mr: 2 }} />
 
-          <Typography variant='subtitle2'>{name}</Typography>
+          <Typography variant="subtitle2">{name}</Typography>
         </TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(createdAt)}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{price}</TableCell>
 
-        
-
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
-          
-
           <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
       </TableRow>
-
 
       <CustomPopover
         open={popover.open}

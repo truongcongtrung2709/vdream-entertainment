@@ -1,6 +1,6 @@
 import { _userList } from 'src/_mock/_user';
-import EmployeeEditView from 'src/sections/employee/view/employee-edit-view';
 
+import EmployeeEditView from 'src/sections/employee/view/employee-edit-view';
 
 // ----------------------------------------------------------------------
 

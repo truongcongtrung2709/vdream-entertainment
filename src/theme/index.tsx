@@ -1,7 +1,7 @@
 'use client';
 
-import { useMemo } from 'react';
 import merge from 'lodash/merge';
+import React, { useMemo } from 'react';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeOptions, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';

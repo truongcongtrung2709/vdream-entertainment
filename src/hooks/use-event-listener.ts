@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 import { useRef, RefObject, useEffect, useLayoutEffect } from 'react';
 
 // ----------------------------------------------------------------------

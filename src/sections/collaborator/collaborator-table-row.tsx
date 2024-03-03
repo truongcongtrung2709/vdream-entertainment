@@ -1,24 +1,21 @@
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
+import { Typography } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
-import ListItemText from '@mui/material/ListItemText';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import Label from 'src/components/label';
+import { fDate } from 'src/utils/format-time';
+
 import Iconify from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 import { IUserItem } from 'src/types/user';
-import { fDate } from 'src/utils/format-time';
-import { Typography } from '@mui/material';
-
 
 // ----------------------------------------------------------------------
 
@@ -41,8 +38,6 @@ export default function CollaboratorTableRow({
 
   const confirm = useBoolean();
 
-  const quickEdit = useBoolean();
-
   const popover = usePopover();
 
   return (
@@ -55,24 +50,19 @@ export default function CollaboratorTableRow({
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
           <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
 
-          <Typography variant='subtitle2'>{name}</Typography>
+          <Typography variant="subtitle2">{name}</Typography>
         </TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(createAt)}</TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{description}</TableCell>
 
-        
-
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
-          
-
           <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
       </TableRow>
-
 
       <CustomPopover
         open={popover.open}

@@ -1,38 +1,26 @@
 import * as Yup from 'yup';
+import { useForm } from 'react-hook-form';
 import { useMemo, useCallback } from 'react';
-import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Switch from '@mui/material/Switch';
+import { CardHeader } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
+import { useResponsive } from 'src/hooks/use-responsive';
+
 import { fData } from 'src/utils/format-number';
 
-import { countries } from 'src/assets/data';
-
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFSwitch,
-  RHFTextField,
-  RHFUploadAvatar,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
+import FormProvider, { RHFTextField, RHFUploadAvatar } from 'src/components/hook-form';
 
 import { IUserItem } from 'src/types/user';
-import { useResponsive } from 'src/hooks/use-responsive';
-import { CardHeader } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -67,14 +55,10 @@ export default function EmployeeNewEditForm({ currentUser }: Props) {
 
   const {
     reset,
-    watch,
-    control,
     setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
-  const values = watch();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -123,11 +107,8 @@ export default function EmployeeNewEditForm({ currentUser }: Props) {
           <Stack spacing={3} sx={{ p: 3 }}>
             <RHFTextField name="name" label="Họ tên" />
 
-
-           
-
             <Stack spacing={1.5}>
-            <Typography variant="subtitle2">Hình đại diện</Typography>
+              <Typography variant="subtitle2">Hình đại diện</Typography>
               <RHFUploadAvatar
                 name="avatarUrl"
                 maxSize={3145728}
@@ -160,7 +141,6 @@ export default function EmployeeNewEditForm({ currentUser }: Props) {
       <Grid container spacing={3} justifyContent="flex-end">
         {renderDetails}
 
-
         <LoadingButton
           type="submit"
           variant="contained"
@@ -171,8 +151,6 @@ export default function EmployeeNewEditForm({ currentUser }: Props) {
           {!currentUser ? 'Tạo nhân viên' : 'Cập nhật'}
         </LoadingButton>
       </Grid>
-
-      
     </FormProvider>
   );
 }

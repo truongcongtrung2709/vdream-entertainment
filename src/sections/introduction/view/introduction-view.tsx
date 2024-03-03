@@ -1,27 +1,21 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import { Typography } from '@mui/material';
 import Container from '@mui/material/Container';
-
-import { paths } from 'src/routes/paths';
-
-import { _userAbout, _userPlans, _userPayment, _userInvoices, _userAddressBook } from 'src/_mock';
 
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import { Typography } from '@mui/material';
+
 import IntroductionViForm from '../introduction-vi-form';
 import IntroductionEnForm from '../introduction-en-form';
-
 
 // ----------------------------------------------------------------------
 
 const TABS = [
- 
   {
     value: 'vietnamese',
     label: 'Tiếng Việt',
@@ -47,7 +41,7 @@ export default function IntroductionView() {
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
-      <Typography variant='h4' sx={{mb:3}}>
+      <Typography variant="h4" sx={{ mb: 3 }}>
         Talents_Giới Thiệu
       </Typography>
 
@@ -65,9 +59,7 @@ export default function IntroductionView() {
 
       {currentTab === 'vietnamese' && <IntroductionViForm />}
 
-      {currentTab === 'english' && (
-        <IntroductionEnForm/>
-      )}
+      {currentTab === 'english' && <IntroductionEnForm />}
     </Container>
   );
 }

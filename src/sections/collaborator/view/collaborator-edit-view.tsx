@@ -1,23 +1,20 @@
 'use client';
 
-import Container from '@mui/material/Container';
+import React, { useState, useCallback } from 'react';
 
-import { paths } from 'src/routes/paths';
+import Container from '@mui/material/Container';
+import { Tab, Tabs, Typography } from '@mui/material';
 
 import { _userList } from 'src/_mock';
 
-import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import { Tab, Tabs, Typography } from '@mui/material';
 import Iconify from 'src/components/iconify';
-import { useCallback, useState } from 'react';
+import { useSettingsContext } from 'src/components/settings';
+
 import CollaboratorNewEditViForm from '../collaborator-new-edit-vi-form';
 import CollaboratorNewEditEnForm from '../collaborator-new-edit-en-form';
 
 // ----------------------------------------------------------------------
 const TABS = [
- 
   {
     value: 'vietnamese',
     label: 'Tiếng Việt',
@@ -45,13 +42,12 @@ export default function CollaboratorEditView({ id }: Props) {
     setCurrentTab(newValue);
   }, []);
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'xl'}> 
-          <Typography variant='h4' sx={{mb:3}}>
-          Sửa Đối tác
-          </Typography>
-          
+    <Container maxWidth={settings.themeStretch ? false : 'xl'}>
+      <Typography variant="h4" sx={{ mb: 3 }}>
+        Sửa Đối tác
+      </Typography>
 
-          <Tabs
+      <Tabs
         value={currentTab}
         onChange={handleChangeTab}
         sx={{
@@ -63,9 +59,8 @@ export default function CollaboratorEditView({ id }: Props) {
         ))}
       </Tabs>
 
-
       {currentTab === 'vietnamese' && <CollaboratorNewEditViForm currentUser={currentUser} />}
-      {currentTab === 'english' && <CollaboratorNewEditEnForm  currentUser={currentUser} />}
+      {currentTab === 'english' && <CollaboratorNewEditEnForm currentUser={currentUser} />}
     </Container>
   );
 }

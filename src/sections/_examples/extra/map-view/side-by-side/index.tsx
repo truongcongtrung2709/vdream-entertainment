@@ -1,5 +1,5 @@
 import Map, { ViewStateChangeEvent } from 'react-map-gl';
-import { memo, useMemo, useState, useCallback } from 'react';
+import React, { memo, useMemo, useState, useCallback } from 'react';
 
 import { MapBoxProps } from 'src/components/map';
 

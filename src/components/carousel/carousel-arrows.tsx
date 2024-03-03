@@ -50,6 +50,7 @@ const StyledIconButton = styled(IconButton, {
 interface Props extends StackProps {
   shape?: 'circular' | 'rounded';
   filled?: boolean;
+  // eslint-disable-next-line no-undef
   children?: React.ReactNode;
   icon?: IconifyProps; // Right icon
   onNext?: VoidFunction;

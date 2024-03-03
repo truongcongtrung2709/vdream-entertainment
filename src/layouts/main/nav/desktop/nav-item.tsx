@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { m } from 'framer-motion';
 import { forwardRef } from 'react';
 

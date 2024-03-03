@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
 import Stack, { StackProps } from '@mui/material/Stack';

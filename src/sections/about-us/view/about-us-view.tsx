@@ -1,25 +1,21 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import { Typography } from '@mui/material';
 import Container from '@mui/material/Container';
-
-
-import { _userAbout, _userPlans, _userPayment, _userInvoices, _userAddressBook } from 'src/_mock';
 
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
+
 import IntroductionViForm from '../about-us-vi-form';
 import IntroductionEnForm from '../about-us-en-form';
-import { Typography } from '@mui/material';
-
 
 // ----------------------------------------------------------------------
 
 const TABS = [
- 
   {
     value: 'vietnamese',
     label: 'Tiếng Việt',
@@ -45,7 +41,7 @@ export default function AboutUsView() {
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
-      <Typography variant='h4' sx={{mb:3}}>
+      <Typography variant="h4" sx={{ mb: 3 }}>
         Talents_Về chúng tôi
       </Typography>
 
@@ -63,9 +59,7 @@ export default function AboutUsView() {
 
       {currentTab === 'vietnamese' && <IntroductionViForm />}
 
-      {currentTab === 'english' && (
-        <IntroductionEnForm/>
-      )}
+      {currentTab === 'english' && <IntroductionEnForm />}
     </Container>
   );
 }

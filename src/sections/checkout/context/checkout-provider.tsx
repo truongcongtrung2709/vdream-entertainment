@@ -1,7 +1,7 @@
 'use client';
 
 import uniq from 'lodash/uniq';
-import { useMemo, useEffect, useCallback } from 'react';
+import React, { useMemo, useEffect, useCallback } from 'react';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';

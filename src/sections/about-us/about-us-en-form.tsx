@@ -16,16 +16,10 @@ import { useRouter } from 'src/routes/hooks';
 import { useBoolean } from 'src/hooks/use-boolean';
 import { useResponsive } from 'src/hooks/use-responsive';
 
-import { _tags } from 'src/_mock';
-
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFUpload,
-  RHFTextField,
-} from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 
 import { IPostItem } from 'src/types/blog';
-
 
 // ----------------------------------------------------------------------
 
@@ -75,12 +69,10 @@ export default function AboutUsEnForm({ currentPost }: Props) {
 
   const {
     reset,
-    watch,
     setValue,
     handleSubmit,
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting },
   } = methods;
-
 
   useEffect(() => {
     if (currentPost) {
@@ -142,8 +134,6 @@ export default function AboutUsEnForm({ currentPost }: Props) {
 
             <RHFTextField name="description" label="Mô tả" multiline rows={3} />
 
-           
-
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Hình ảnh</Typography>
               <RHFUpload
@@ -159,15 +149,10 @@ export default function AboutUsEnForm({ currentPost }: Props) {
     </>
   );
 
-
-     
-
-
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3} justifyContent="flex-end">
         {renderDetails}
-
 
         <LoadingButton
           type="submit"
@@ -179,8 +164,6 @@ export default function AboutUsEnForm({ currentPost }: Props) {
           Cập nhât
         </LoadingButton>
       </Grid>
-
-      
     </FormProvider>
   );
 }

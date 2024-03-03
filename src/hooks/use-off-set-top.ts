@@ -1,5 +1,5 @@
 import { useScroll } from 'framer-motion';
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 
 // ----------------------------------------------------------------------
 

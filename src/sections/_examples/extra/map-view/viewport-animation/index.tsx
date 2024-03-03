@@ -1,5 +1,5 @@
 import Map, { MapRef } from 'react-map-gl';
-import { memo, useRef, useState, useCallback } from 'react';
+import React, { memo, useRef, useState, useCallback } from 'react';
 
 import { MapControl, MapBoxProps } from 'src/components/map';
 

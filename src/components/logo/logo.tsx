@@ -1,7 +1,7 @@
+/* eslint-disable react/display-name */
 import { forwardRef } from 'react';
 
 import Link from '@mui/material/Link';
-import { useTheme } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 
 import { RouterLink } from 'src/routes/components';
@@ -14,15 +14,13 @@ export interface LogoProps extends BoxProps {
 
 const Logo = forwardRef<HTMLDivElement, LogoProps>(
   ({ disabledLink = false, sx, ...other }, ref) => {
-    const theme = useTheme();
-
     // OR using local (public folder)
     // -------------------------------------------------------
     const logo = (
       <Box
         component="img"
         src="/logo/logo_single.svg"
-        sx={{ width: 133, height:59, cursor: 'pointer', ...sx }}
+        sx={{ width: 133, height: 59, cursor: 'pointer', ...sx }}
       />
     );
 

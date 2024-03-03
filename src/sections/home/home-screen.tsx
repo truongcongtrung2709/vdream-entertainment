@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 
 import { alpha } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
-import Logo from 'src/components/logo';
 
+import Logo from 'src/components/logo';
 
 // ----------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ export default function HomeScreen({ sx, ...other }: BoxProps) {
             repeat: Infinity,
           }}
         >
-          <Logo  disabledLink sx={{ width: 64, height: 64, position:"absolute"}} />
+          <Logo disabledLink sx={{ width: 64, height: 64, position: 'absolute' }} />
         </m.div>
 
         <Box

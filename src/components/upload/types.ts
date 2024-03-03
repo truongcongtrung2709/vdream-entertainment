@@ -1,3 +1,4 @@
+import React from 'react';
 import { DropzoneOptions } from 'react-dropzone';
 
 import { Theme, SxProps } from '@mui/material/styles';

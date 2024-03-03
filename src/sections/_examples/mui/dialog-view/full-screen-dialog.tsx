@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 import List from '@mui/material/List';
 import Slide from '@mui/material/Slide';
@@ -19,6 +19,7 @@ import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react/display-name
 const Transition = forwardRef(
   (
     props: TransitionProps & {

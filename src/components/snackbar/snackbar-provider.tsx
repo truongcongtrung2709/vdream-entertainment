@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { closeSnackbar, SnackbarProvider as NotistackProvider } from 'notistack';
 
 import Collapse from '@mui/material/Collapse';

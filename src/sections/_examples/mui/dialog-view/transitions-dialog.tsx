@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
@@ -12,6 +12,7 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react/display-name
 const Transition = forwardRef(
   (
     props: TransitionProps & {

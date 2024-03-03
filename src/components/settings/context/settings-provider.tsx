@@ -1,7 +1,7 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 
 import { useLocalStorage } from 'src/hooks/use-local-storage';
 

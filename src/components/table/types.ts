@@ -1,5 +1,7 @@
 // ----------------------------------------------------------------------
 
+import React from 'react';
+
 export type TableProps = {
   dense: boolean;
   page: number;

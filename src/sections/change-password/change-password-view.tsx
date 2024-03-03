@@ -8,15 +8,15 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { Container, Typography } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
 import Iconify from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
-import { Container, Typography } from '@mui/material';
 import { useSettingsContext } from 'src/components/settings';
+import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -70,62 +70,66 @@ export default function ChangePasswordView() {
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-      <Typography variant='h4' sx={{mb:3}}>
-          Đổi mật khẩu
+      <Typography variant="h4" sx={{ mb: 3 }}>
+        Đổi mật khẩu
       </Typography>
-    <FormProvider methods={methods} onSubmit={onSubmit}>
-      <Stack component={Card} spacing={3} sx={{ p: 3 }}>
-        <RHFTextField
-          name="oldPassword"
-          type={password.value ? 'text' : 'password'}
-          label="Mật khẩu cũ"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={password.onToggle} edge="end">
-                  <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+      <FormProvider methods={methods} onSubmit={onSubmit}>
+        <Stack component={Card} spacing={3} sx={{ p: 3 }}>
+          <RHFTextField
+            name="oldPassword"
+            type={password.value ? 'text' : 'password'}
+            label="Mật khẩu cũ"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={password.onToggle} edge="end">
+                    <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
 
-        <RHFTextField
-          name="newPassword"
-          label="Mật khẩu mới"
-          type={password.value ? 'text' : 'password'}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={password.onToggle} edge="end">
-                  <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          
-        />
+          <RHFTextField
+            name="newPassword"
+            label="Mật khẩu mới"
+            type={password.value ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={password.onToggle} edge="end">
+                    <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
 
-        <RHFTextField
-          name="confirmNewPassword"
-          type={password.value ? 'text' : 'password'}
-          label="Xác nhận lại"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={password.onToggle} edge="end">
-                  <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+          <RHFTextField
+            name="confirmNewPassword"
+            type={password.value ? 'text' : 'password'}
+            label="Xác nhận lại"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={password.onToggle} edge="end">
+                    <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
 
-        <LoadingButton type="submit" variant="contained" loading={isSubmitting} sx={{ ml: 'auto' }}>
-          Lưu thay đổi
-        </LoadingButton>
-      </Stack>
-    </FormProvider>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+            sx={{ ml: 'auto' }}
+          >
+            Lưu thay đổi
+          </LoadingButton>
+        </Stack>
+      </FormProvider>
     </Container>
   );
 }

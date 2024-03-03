@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 import { GuestGuard } from 'src/auth/guard';
 import AuthBackgroundLayout from 'src/layouts/auth/background';
 

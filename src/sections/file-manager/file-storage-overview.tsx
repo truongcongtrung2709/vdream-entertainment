@@ -1,3 +1,4 @@
+import React from 'react';
 import { ApexOptions } from 'apexcharts';
 
 import Box from '@mui/material/Box';

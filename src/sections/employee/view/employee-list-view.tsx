@@ -3,16 +3,14 @@
 import isEqual from 'lodash/isEqual';
 import { useState, useCallback } from 'react';
 
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
+import { Stack, Typography } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 
 import { paths } from 'src/routes/paths';
@@ -21,14 +19,12 @@ import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { _roles, _userList, USER_STATUS_OPTIONS } from 'src/_mock';
+import { _userList } from 'src/_mock';
 
-import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import {
   useTable,
   emptyRows,
@@ -40,15 +36,11 @@ import {
   TablePaginationCustom,
 } from 'src/components/table';
 
-import { IUserItem, IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
+import { IUserItem, IUserTableFilters } from 'src/types/user';
 
-import UserTableRow from '../employee-table-row';
-import { Stack, Typography } from '@mui/material';
 import EmployeeTableRow from '../employee-table-row';
 
 // ----------------------------------------------------------------------
-
-const STATUS_OPTIONS = [{ value: 'all', label: 'All' }, ...USER_STATUS_OPTIONS];
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Nhân viên' },
@@ -75,7 +67,7 @@ export default function EmployeeListView() {
 
   const [tableData, setTableData] = useState(_userList);
 
-  const [filters, setFilters] = useState(defaultFilters);
+  const [filters] = useState(defaultFilters);
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -93,17 +85,6 @@ export default function EmployeeListView() {
   const canReset = !isEqual(defaultFilters, filters);
 
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
-
-  const handleFilters = useCallback(
-    (name: string, value: IUserTableFilterValue) => {
-      table.onResetPage();
-      setFilters((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    },
-    [table]
-  );
 
   const handleDeleteRow = useCallback(
     (id: string) => {
@@ -133,34 +114,20 @@ export default function EmployeeListView() {
     [router]
   );
 
-  const handleFilterStatus = useCallback(
-    (event: React.SyntheticEvent, newValue: string) => {
-      handleFilters('status', newValue);
-    },
-    [handleFilters]
-  );
-
-  const handleResetFilters = useCallback(() => {
-    setFilters(defaultFilters);
-  }, []);
-
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : 'xl'}>
-        <Stack direction='row' justifyContent='space-between' textAlign='center' sx={{mb:5}}>
-          <Typography variant='h4'>
-          Nhân viên
-          </Typography>
+        <Stack direction="row" justifyContent="space-between" textAlign="center" sx={{ mb: 5 }}>
+          <Typography variant="h4">Nhân viên</Typography>
           <Button
-              component={RouterLink}
-              href={paths.dashboard.employee.new}
-              variant="contained"
-              startIcon={<Iconify icon="mingcute:add-line" />}
+            component={RouterLink}
+            href={paths.dashboard.employee.new}
+            variant="contained"
+            startIcon={<Iconify icon="mingcute:add-line" />}
           >
-              Thêm nhân viên
+            Thêm nhân viên
           </Button>
         </Stack>
-      
 
         <Card>
           <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>

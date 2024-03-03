@@ -1,9 +1,11 @@
 'use client';
 
 import * as Yup from 'yup';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { Alert } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -14,12 +16,11 @@ import { useRouter, useSearchParams } from 'src/routes/hooks';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import Iconify from 'src/components/iconify';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
 import { useAuthContext } from 'src/auth/hooks';
 import { PATH_AFTER_LOGIN } from 'src/config-global';
-import { useState } from 'react';
-import { Alert } from '@mui/material';
+
+import Iconify from 'src/components/iconify';
+import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -76,16 +77,13 @@ export default function LoginView() {
       <Typography variant="h3" paragraph>
         Đăng nhập
       </Typography>
-
-     
     </div>
   );
-
 
   const renderForm = (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Stack spacing={2.5} alignItems="flex-end">
-      {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+        {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
         <RHFTextField name="email" label="Email address" />
 
         <RHFTextField
@@ -102,7 +100,6 @@ export default function LoginView() {
             ),
           }}
         />
-
 
         <LoadingButton
           fullWidth

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Props } from 'simplebar-react';
 
 import { Theme, SxProps } from '@mui/material/styles';

@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 import AuthClassicLayout from 'src/layouts/auth/classic';
 
 // ----------------------------------------------------------------------

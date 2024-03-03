@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Paper from '@mui/material/Paper';
 import CardHeader from '@mui/material/CardHeader';
 import Stack, { StackProps } from '@mui/material/Stack';

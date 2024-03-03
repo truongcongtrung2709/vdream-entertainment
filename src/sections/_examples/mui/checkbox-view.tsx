@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';

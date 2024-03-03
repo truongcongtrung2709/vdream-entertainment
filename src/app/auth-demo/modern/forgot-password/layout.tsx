@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 import AuthModernCompactLayout from 'src/layouts/auth/modern-compact';
 
 // ----------------------------------------------------------------------

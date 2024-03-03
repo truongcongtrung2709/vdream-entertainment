@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Box from '@mui/material/Box';
 import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';

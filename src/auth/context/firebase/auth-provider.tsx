@@ -1,7 +1,7 @@
 'use client';
 
 import { initializeApp } from 'firebase/app';
-import { useMemo, useEffect, useReducer, useCallback } from 'react';
+import React, { useMemo, useEffect, useReducer, useCallback } from 'react';
 import { doc, getDoc, setDoc, collection, getFirestore } from 'firebase/firestore';
 import {
   getAuth,

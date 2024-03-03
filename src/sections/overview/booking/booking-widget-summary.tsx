@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Box from '@mui/material/Box';
 import Card, { CardProps } from '@mui/material/Card';
 

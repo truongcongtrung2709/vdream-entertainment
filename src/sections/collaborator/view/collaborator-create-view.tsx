@@ -1,19 +1,17 @@
 'use client';
 
+import React, { useState, useCallback } from 'react';
+
 import Container from '@mui/material/Container';
-
-
-import { useSettingsContext } from 'src/components/settings';
 import { Tab, Tabs, Typography } from '@mui/material';
+
 import Iconify from 'src/components/iconify';
-import { useCallback, useState } from 'react';
+import { useSettingsContext } from 'src/components/settings';
+
 import CollaboratorNewEditViForm from '../collaborator-new-edit-vi-form';
 import CollaboratorNewEditEnForm from '../collaborator-new-edit-en-form';
 
-
-
 const TABS = [
- 
   {
     value: 'vietnamese',
     label: 'Tiếng Việt',
@@ -30,7 +28,6 @@ const TABS = [
 export default function CollaboratorCreateView() {
   const settings = useSettingsContext();
 
-
   const [currentTab, setCurrentTab] = useState('vietnamese');
 
   const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
@@ -38,11 +35,11 @@ export default function CollaboratorCreateView() {
   }, []);
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-       <Typography variant='h4' sx={{mb:3}}>
-          Thêm Đối tác
-        </Typography>
+      <Typography variant="h4" sx={{ mb: 3 }}>
+        Thêm Đối tác
+      </Typography>
 
-        <Tabs
+      <Tabs
         value={currentTab}
         onChange={handleChangeTab}
         sx={{
@@ -54,12 +51,9 @@ export default function CollaboratorCreateView() {
         ))}
       </Tabs>
 
+      {currentTab === 'vietnamese' && <CollaboratorNewEditViForm />}
 
-      {currentTab === "vietnamese" && <CollaboratorNewEditViForm />}
-
-      {currentTab === "english" && <CollaboratorNewEditEnForm/>}
-
-      
+      {currentTab === 'english' && <CollaboratorNewEditEnForm />}
     </Container>
   );
 }

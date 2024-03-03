@@ -1,7 +1,7 @@
 'use client';
 
 import { Auth } from '@aws-amplify/auth';
-import { useMemo, useEffect, useReducer, useCallback } from 'react';
+import React, { useMemo, useEffect, useReducer, useCallback } from 'react';
 
 import { AMPLIFY_API } from 'src/config-global';
 

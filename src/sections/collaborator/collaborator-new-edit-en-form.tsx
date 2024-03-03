@@ -1,10 +1,11 @@
 import * as Yup from 'yup';
-import { useMemo, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import { useMemo, useCallback } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
+import { CardHeader } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -12,16 +13,12 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
+import { useResponsive } from 'src/hooks/use-responsive';
 
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFTextField,
-  RHFUpload,
-} from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 
 import { IUserItem } from 'src/types/user';
-import { useResponsive } from 'src/hooks/use-responsive';
-import { CardHeader } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +36,7 @@ export default function CollaboratorNewEditEnForm({ currentUser }: Props) {
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     avatarUrl: Yup.mixed<any>().nullable().required('Avatar is required'),
-    description: Yup.string()
+    description: Yup.string(),
   });
 
   const defaultValues = useMemo(
@@ -58,14 +55,10 @@ export default function CollaboratorNewEditEnForm({ currentUser }: Props) {
 
   const {
     reset,
-    watch,
-    control,
     setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
-  const values = watch();
 
   const handleRemoveFile = useCallback(() => {
     setValue('avatarUrl', null);
@@ -106,7 +99,7 @@ export default function CollaboratorNewEditEnForm({ currentUser }: Props) {
             Chi tiết
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Tiêu đề, mô tả ngắn, hình ảnh...
+            Tiêu đề, mô tả ngắn, hình ảnh...
           </Typography>
         </Grid>
       )}
@@ -139,7 +132,6 @@ export default function CollaboratorNewEditEnForm({ currentUser }: Props) {
       <Grid container spacing={3} justifyContent="flex-end">
         {renderDetails}
 
-
         <LoadingButton
           type="submit"
           variant="contained"
@@ -150,8 +142,6 @@ export default function CollaboratorNewEditEnForm({ currentUser }: Props) {
           {!currentUser ? 'Tạo nhân viên' : 'Cập nhật'}
         </LoadingButton>
       </Grid>
-
-      
     </FormProvider>
   );
 }

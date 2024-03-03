@@ -16,7 +16,6 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import { bgBlur } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
-import Label from 'src/components/label';
 
 import NavMobile from './nav/mobile';
 import NavDesktop from './nav/desktop';
@@ -73,9 +72,7 @@ export default function Header() {
                 rel="noopener"
                 underline="none"
                 sx={{ ml: 1 }}
-              >
-            
-              </Link>
+              />
             }
           >
             <Logo />

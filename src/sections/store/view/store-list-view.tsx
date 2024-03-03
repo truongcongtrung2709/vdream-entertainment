@@ -1,18 +1,16 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
+import { Stack, Typography } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 
 import { paths } from 'src/routes/paths';
@@ -21,35 +19,29 @@ import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { _roles, _userList, USER_STATUS_OPTIONS } from 'src/_mock';
+import { useGetProducts } from 'src/api/product';
 
-import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import {
   useTable,
   emptyRows,
   TableNoData,
   getComparator,
+  TableSkeleton,
   TableEmptyRows,
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
-  TableSkeleton,
 } from 'src/components/table';
 
+import { IProductItem, IProductTableFilters } from 'src/types/product';
 
-import { Stack, Typography } from '@mui/material';
-import { IProductFilterValue, IProductItem, IProductTableFilters } from 'src/types/product';
-import { useGetProducts } from 'src/api/product';
 import StoreTableRow from '../store-table-row';
 
 // ----------------------------------------------------------------------
-
-
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Nhân viên' },
@@ -77,7 +69,7 @@ export default function StoreListView() {
 
   const [tableData, setTableData] = useState<IProductItem[]>([]);
 
-  const [filters, setFilters] = useState(defaultFilters);
+  const [filters] = useState(defaultFilters);
 
   const { products, productsLoading, productsEmpty } = useGetProducts();
 
@@ -103,17 +95,6 @@ export default function StoreListView() {
   const canReset = !isEqual(defaultFilters, filters);
 
   const notFound = (!dataFiltered.length && canReset) || productsEmpty;
-
-  const handleFilters = useCallback(
-    (name: string, value: IProductFilterValue) => {
-      table.onResetPage();
-      setFilters((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    },
-    [table]
-  );
 
   const handleDeleteRow = useCallback(
     (id: string) => {
@@ -146,20 +127,17 @@ export default function StoreListView() {
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : 'xl'}>
-        <Stack direction='row' justifyContent='space-between' textAlign='center' sx={{mb:5}}>
-          <Typography variant='h4'>
-          Sản phẩm
-          </Typography>
+        <Stack direction="row" justifyContent="space-between" textAlign="center" sx={{ mb: 5 }}>
+          <Typography variant="h4">Sản phẩm</Typography>
           <Button
-              component={RouterLink}
-              href={paths.dashboard.store.new}
-              variant="contained"
-              startIcon={<Iconify icon="mingcute:add-line" />}
+            component={RouterLink}
+            href={paths.dashboard.store.new}
+            variant="contained"
+            startIcon={<Iconify icon="mingcute:add-line" />}
           >
-              Thêm sản phẩm mới
+            Thêm sản phẩm mới
           </Button>
         </Stack>
-      
 
         <Card>
           <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
@@ -199,7 +177,7 @@ export default function StoreListView() {
                   }
                 />
 
-<TableBody>
+                <TableBody>
                   {productsLoading ? (
                     [...Array(table.rowsPerPage)].map((i, index) => (
                       <TableSkeleton key={index} sx={{ height: denseHeight }} />
@@ -313,4 +291,3 @@ function applyFilter({
 
   return inputData;
 }
-

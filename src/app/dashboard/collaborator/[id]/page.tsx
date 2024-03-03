@@ -1,6 +1,6 @@
 import { _userList } from 'src/_mock/_user';
-import { CollaboratorEditView } from 'src/sections/collaborator/view';
 
+import { CollaboratorEditView } from 'src/sections/collaborator/view';
 
 // ----------------------------------------------------------------------
 

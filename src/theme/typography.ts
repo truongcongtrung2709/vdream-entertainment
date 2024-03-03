@@ -1,3 +1,4 @@
+import React from 'react';
 import { Barlow, Public_Sans } from 'next/font/google';
 
 // ----------------------------------------------------------------------
