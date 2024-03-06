@@ -2,8 +2,6 @@ import { useMemo } from 'react';
 
 import { paths } from 'src/routes/paths';
 
-import { useTranslate } from 'src/locales';
-
 import SvgColor from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
@@ -46,8 +44,6 @@ const ICONS = {
 // ----------------------------------------------------------------------
 
 export function useNavData() {
-  const { t } = useTranslate();
-
   const data = useMemo(
     () => [
       // OVERVIEW
@@ -55,39 +51,39 @@ export function useNavData() {
       {
         items: [
           {
-            title: t('Talents_Giới thiệu'),
+            title: 'Talents_Giới thiệu',
             path: paths.dashboard.root,
             icon: ICONS.blog,
           },
           {
-            title: t('Talents_Về chúng tôi'),
+            title: 'Talents_Về chúng tôi',
             path: paths.dashboard.about.root,
             icon: ICONS.blog,
           },
           {
-            title: t('Nhân viên'),
+            title: 'Nhân viên',
             path: paths.dashboard.employee.root,
             icon: ICONS.user,
           },
           {
-            title: t('Cửa hàng'),
+            title: 'Cửa hàng',
             path: paths.dashboard.store.root,
             icon: ICONS.order,
           },
           {
-            title: t('Đối tác'),
+            title: 'Đối tác',
             path: paths.dashboard.collaborator.root,
             icon: ICONS.user,
           },
           {
-            title: t('Đổi mật khẩu'),
+            title: 'Đổi mật khẩu',
             path: paths.dashboard.changePassword.root,
             icon: ICONS.lock,
           },
         ],
       },
     ],
-    [t]
+    []
   );
 
   return data;

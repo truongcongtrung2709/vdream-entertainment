@@ -3,9 +3,9 @@ import IntroductionView from 'src/sections/introduction/view/introduction-view';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Dashboard: App',
+  title: 'Dashboard: VDream',
 };
 
-export default function OverviewAppPage() {
+export default function HomePage() {
   return <IntroductionView />;
 }

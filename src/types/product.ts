@@ -54,7 +54,6 @@ export type IProductItem = {
   totalReviews: number;
   inventoryType: string;
   subDescription: string;
-  youtubeLink: string;
   priceSale: number | null;
   reviews: IProductReview[];
   createdAt: Date;
@@ -71,6 +70,7 @@ export type IProductItem = {
     enabled: boolean;
     content: string;
   };
+  youtubeLink: string;
 };
 
 export type IProductTableFilterValue = string | string[];
