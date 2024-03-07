@@ -2,8 +2,8 @@
 
 import { createContext } from 'react';
 
-import { JWTContextType } from '../types';
+import { ContextType } from '../types';
 
 // ----------------------------------------------------------------------
 
-export const AuthContext = createContext({} as JWTContextType);
+export const AuthContext = createContext({} as ContextType);

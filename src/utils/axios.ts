@@ -20,30 +20,19 @@ export const fetcher = async (args: string | [string, AxiosRequestConfig]) => {
 
   const res = await axiosInstance.get(url, { ...config });
 
-  return res.data;
+  return res.data.data;
 };
 
 // ----------------------------------------------------------------------
 
 export const endpoints = {
-  chat: '/api/chat',
-  kanban: '/api/kanban',
-  calendar: '/api/calendar',
   auth: {
     me: '/api/auth/me',
-    login: '/api/auth/login',
+    login: '/api/v1/login',
     register: '/api/auth/register',
   },
-  mail: {
-    list: '/api/mail/list',
-    details: '/api/mail/details',
-    labels: '/api/mail/labels',
-  },
-  post: {
-    list: '/api/post/list',
-    details: '/api/post/details',
-    latest: '/api/post/latest',
-    search: '/api/post/search',
+  introduce: {
+    list: '/api/v1/introduce/list'
   },
   product: {
     list: '/api/product/list',

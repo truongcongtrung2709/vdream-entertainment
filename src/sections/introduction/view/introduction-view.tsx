@@ -12,6 +12,7 @@ import { useSettingsContext } from 'src/components/settings';
 
 import IntroductionViForm from '../introduction-vi-form';
 import IntroductionEnForm from '../introduction-en-form';
+import { useGetIntroduces } from 'src/api/introduce';
 
 // ----------------------------------------------------------------------
 
@@ -35,6 +36,9 @@ export default function IntroductionView() {
 
   const [currentTab, setCurrentTab] = useState('vietnamese');
 
+  const { introduces } = useGetIntroduces()
+  const introduceData = introduces.length > 0 ? introduces[0] : null;
+
   const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
     setCurrentTab(newValue);
   }, []);
@@ -57,9 +61,9 @@ export default function IntroductionView() {
         ))}
       </Tabs>
 
-      {currentTab === 'vietnamese' && <IntroductionViForm />}
+      {currentTab === 'vietnamese' && <IntroductionViForm introduceData={introduceData} />}
 
-      {currentTab === 'english' && <IntroductionEnForm />}
+      {currentTab === 'english' && <IntroductionEnForm introduceData={introduceData} />}
     </Container>
   );
 }

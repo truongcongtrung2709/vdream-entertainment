@@ -38,15 +38,14 @@ export default function LoginView() {
   const returnTo = searchParams.get('returnTo');
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required').email('That is not an email'),
+    username: Yup.string().required('username is required'),
     password: Yup.string()
       .required('Password is required')
-      .min(6, 'Password should be of minimum 6 characters length'),
   });
 
   const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
+    username: 'dream',
+    password: '123456',
   };
 
   const methods = useForm({
@@ -62,7 +61,7 @@ export default function LoginView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await login?.(data.email, data.password);
+      await login?.(data.username, data.password);
 
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
@@ -84,7 +83,7 @@ export default function LoginView() {
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Stack spacing={2.5} alignItems="flex-end">
         {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
-        <RHFTextField name="email" label="Email address" />
+        <RHFTextField name="username" label="Username" />
 
         <RHFTextField
           name="password"

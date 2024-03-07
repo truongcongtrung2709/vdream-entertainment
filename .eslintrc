@@ -4,7 +4,12 @@
     "browser": true,
     "es2021": true
   },
-  "plugins": ["perfectionist", "unused-imports", "@typescript-eslint", "prettier"],
+  "plugins": [
+    "perfectionist",
+    "unused-imports",
+    "@typescript-eslint",
+    "prettier"
+  ],
   "extends": [
     "airbnb",
     "airbnb-typescript",
@@ -22,6 +27,12 @@
     },
     "project": "./tsconfig.json"
   },
+  "prettier/prettier": [
+    "error",
+    {
+      "endOfLine": "off"
+    }
+  ],
   "settings": {
     "import/resolver": {
       "typescript": {
@@ -122,7 +133,10 @@
         "type": "line-length",
         "newlines-between": "always",
         "groups": [
-          ["builtin", "external"],
+          [
+            "builtin",
+            "external"
+          ],
           "custom-mui",
           "custom-routes",
           "custom-hooks",
@@ -131,7 +145,11 @@
           "custom-components",
           "custom-sections",
           "custom-types",
-          ["parent", "sibling", "index"],
+          [
+            "parent",
+            "sibling",
+            "index"
+          ],
           "object",
           "unknown"
         ],
@@ -146,7 +164,9 @@
             "custom-types": "src/types/**"
           }
         },
-        "internal-pattern": ["src/**"]
+        "internal-pattern": [
+          "src/**"
+        ]
       }
     ]
   }

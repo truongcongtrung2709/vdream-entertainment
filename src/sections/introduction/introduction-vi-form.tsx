@@ -19,15 +19,15 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 
-import { IPostItem } from 'src/types/blog';
+import { IIntroduceItem } from 'src/types/introduce';
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  currentPost?: IPostItem;
+  introduceData: IIntroduceItem
 };
 
-export default function IntroductionViForm({ currentPost }: Props) {
+export default function IntroductionViForm({ introduceData }: Props) {
   const router = useRouter();
 
   const mdUp = useResponsive('up', 'md');
@@ -37,29 +37,26 @@ export default function IntroductionViForm({ currentPost }: Props) {
   const preview = useBoolean();
 
   const NewBlogSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
-    description: Yup.string().required('Description is required'),
-    content: Yup.string().required('Content is required'),
-    coverUrl: Yup.mixed<any>().nullable().required('Cover is required'),
-    tags: Yup.array().min(2, 'Must have at least 2 tags'),
-    metaKeywords: Yup.array().min(1, 'Meta keywords is required'),
-    // not required
-    metaTitle: Yup.string(),
-    metaDescription: Yup.string(),
+    title_vi: Yup.string().required('Title is required'),
+    title_en: Yup.string().required('Title is required'),
+    describe_vi: Yup.string().required('Description is required'),
+    describe_en: Yup.string().required('Description is required'),
+    image: Yup.mixed<any>().nullable().required('Cover is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      title: currentPost?.title || '',
-      description: currentPost?.description || '',
-      content: currentPost?.content || '',
-      coverUrl: currentPost?.coverUrl || null,
-      tags: currentPost?.tags || [],
-      metaKeywords: currentPost?.metaKeywords || [],
-      metaTitle: currentPost?.metaTitle || '',
-      metaDescription: currentPost?.metaDescription || '',
+      title_vi: introduceData?.title_vi || '',
+      title_en: introduceData?.title_en || '',
+      description: introduceData?.description || '',
+      content: introduceData?.content || '',
+      coverUrl: introduceData?.coverUrl || null,
+      tags: introduceData?.tags || [],
+      metaKeywords: introduceData?.metaKeywords || [],
+      metaTitle: introduceData?.metaTitle || '',
+      metaDescription: introduceData?.metaDescription || '',
     }),
-    [currentPost]
+    [introduceData]
   );
 
   const methods = useForm({
