@@ -1,6 +1,7 @@
-import { StoreListView } from 'src/sections/store/view';
 
 // ----------------------------------------------------------------------
+
+import { StoreListView } from "src/sections/dashboard/store/view";
 
 export const metadata = {
   title: 'Dashboard: User Profile',

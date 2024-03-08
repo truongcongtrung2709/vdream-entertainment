@@ -1,4 +1,4 @@
-import { EmployeeListView } from 'src/sections/employee/view';
+import { EmployeeListView } from "src/sections/dashboard/employee/view";
 
 // ----------------------------------------------------------------------
 

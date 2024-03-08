@@ -1,19 +1,25 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
-import { paths } from 'src/routes/paths';
+import { useGetEmployees } from 'src/api/employee';
 
-// ----------------------------------------------------------------------
+import HomeHero from '../home-hero';
+import HomeTeam from '../home-team';
+import HomeAbout from '../home-about';
+import MainLayout from 'src/layouts/main';
 
 // ----------------------------------------------------------------------
 
 export default function HomeView() {
-  const router = useRouter();
-  useEffect(() => {
-    router.push(paths.dashboard.root);
-  });
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  return <></>;
+  const { employees } = useGetEmployees();
+
+  return (
+    <MainLayout>
+      <HomeHero />
+
+      <HomeAbout />
+
+      <HomeTeam members={employees} />
+    </MainLayout>
+  );
 }

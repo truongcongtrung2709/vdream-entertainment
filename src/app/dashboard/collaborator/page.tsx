@@ -1,6 +1,7 @@
-import CollaboratorListView from 'src/sections/collaborator/view/collaborator-list-view';
+import { CollaboratorListView } from "src/sections/dashboard/collaborator/view";
 
 // ----------------------------------------------------------------------
+
 
 export const metadata = {
   title: 'Dashboard: Collaborator List',

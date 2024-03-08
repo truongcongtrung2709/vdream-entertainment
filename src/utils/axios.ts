@@ -40,6 +40,18 @@ export const endpoints = {
     list: '/api/v1/introduce/list',
     update: '/api/v1/introduce/update'
   },
+  about: {
+    list: 'api/v1/towards-us/list'
+  },
+  employee: {
+    list: 'api/v1/employee/list'
+  },
+  item: {
+    list: 'api/v1/item/list'
+  },
+  partner: {
+    list: 'api/v1/partner/list'
+  },
   product: {
     list: '/api/product/list',
     details: '/api/product/details',

@@ -2,6 +2,7 @@ import { _mock } from './_mock';
 
 // ----------------------------------------------------------------------
 
+
 export const _carouselsMembers = [...Array(6)].map((_, index) => ({
   id: _mock.id(index),
   name: _mock.fullName(index),

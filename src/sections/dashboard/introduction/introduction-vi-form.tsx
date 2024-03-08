@@ -77,7 +77,6 @@ export default function IntroductionViForm({ introduceData }: Props) {
   } = methods;
 
   useEffect(() => {
-    console.log(introduceData);
 
     if (introduceData) {
       reset(defaultValues);

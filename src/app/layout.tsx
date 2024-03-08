@@ -3,6 +3,10 @@
 /* eslint-disable perfectionist/sort-imports */
 import 'src/global.css';
 
+// i18n
+import 'src/locales/i18n';
+// 
+
 // ----------------------------------------------------------------------
 
 import ThemeProvider from 'src/theme';
@@ -15,6 +19,8 @@ import { SettingsProvider } from 'src/components/settings';
 
 import React from 'react';
 import { AuthProvider } from 'src/auth/context';
+import MainLayout from 'src/layouts/main';
+import { LocalizationProvider } from 'src/locales';
 // import { AuthProvider } from 'src/auth/context/auth0';
 // import { AuthProvider } from 'src/auth/context/amplify';
 // import { AuthProvider } from 'src/auth/context/firebase';
@@ -30,25 +36,27 @@ export default function RootLayout({ children }: Props) {
     <html lang="en" className={primaryFont.className}>
       <body>
         <AuthProvider>
-          <SettingsProvider
-            defaultSettings={{
-              themeMode: 'light', // 'light' | 'dark'
-              themeDirection: 'ltr', //  'rtl' | 'ltr'
-              themeContrast: 'default', // 'default' | 'bold'
-              themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
-              themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
-              themeStretch: false,
-            }}
-          >
-            <ThemeProvider>
-              <MotionLazy>
-                <SnackbarProvider>
-                  <ProgressBar />
-                  {children}
-                </SnackbarProvider>
-              </MotionLazy>
-            </ThemeProvider>
-          </SettingsProvider>
+          <LocalizationProvider>
+            <SettingsProvider
+              defaultSettings={{
+                themeMode: 'light', // 'light' | 'dark'
+                themeDirection: 'ltr', //  'rtl' | 'ltr'
+                themeContrast: 'default', // 'default' | 'bold'
+                themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
+                themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
+                themeStretch: false,
+              }}
+            >
+              <ThemeProvider>
+                <MotionLazy>
+                  <SnackbarProvider>
+                    <ProgressBar />
+                    {children}
+                  </SnackbarProvider>
+                </MotionLazy>
+              </ThemeProvider>
+            </SettingsProvider>
+          </LocalizationProvider>
         </AuthProvider>
       </body>
     </html>
