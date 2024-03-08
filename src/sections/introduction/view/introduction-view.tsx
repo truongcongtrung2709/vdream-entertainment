@@ -43,6 +43,8 @@ export default function IntroductionView() {
     setCurrentTab(newValue);
   }, []);
 
+
+
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <Typography variant="h4" sx={{ mb: 3 }}>

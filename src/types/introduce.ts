@@ -4,5 +4,5 @@ export type IIntroduceItem = {
   title_en: string;
   describe_vi: string;
   describe_en: string;
-  image: string;
+  image?: string;
 }

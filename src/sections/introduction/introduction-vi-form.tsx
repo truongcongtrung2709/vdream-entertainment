@@ -20,11 +20,15 @@ import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 
 import { IIntroduceItem } from 'src/types/introduce';
+import { HOST_API } from 'src/config-global';
+import { updateIntroduce } from 'src/api/introduce';
+import { fetcher } from 'src/utils/axios';
+import useSWR, { KeyedMutator } from 'swr';
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  introduceData: IIntroduceItem
+  introduceData: IIntroduceItem | null
 };
 
 export default function IntroductionViForm({ introduceData }: Props) {
@@ -32,29 +36,30 @@ export default function IntroductionViForm({ introduceData }: Props) {
 
   const mdUp = useResponsive('up', 'md');
 
+
+
   const { enqueueSnackbar } = useSnackbar();
 
   const preview = useBoolean();
 
+
   const NewBlogSchema = Yup.object().shape({
+    id: Yup.number().required('Number is required'),
     title_vi: Yup.string().required('Title is required'),
-    title_en: Yup.string().required('Title is required'),
     describe_vi: Yup.string().required('Description is required'),
+    image: Yup.mixed<any>().nullable().required('Image is required'),
+    title_en: Yup.string().required('Title is required'),
     describe_en: Yup.string().required('Description is required'),
-    image: Yup.mixed<any>().nullable().required('Cover is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
+      id: introduceData?.id || 1,
       title_vi: introduceData?.title_vi || '',
+      describe_vi: introduceData?.describe_vi || '',
+      image: introduceData?.image || null,
       title_en: introduceData?.title_en || '',
-      description: introduceData?.description || '',
-      content: introduceData?.content || '',
-      coverUrl: introduceData?.coverUrl || null,
-      tags: introduceData?.tags || [],
-      metaKeywords: introduceData?.metaKeywords || [],
-      metaTitle: introduceData?.metaTitle || '',
-      metaDescription: introduceData?.metaDescription || '',
+      describe_en: introduceData?.describe_en || '',
     }),
     [introduceData]
   );
@@ -72,18 +77,21 @@ export default function IntroductionViForm({ introduceData }: Props) {
   } = methods;
 
   useEffect(() => {
-    if (currentPost) {
+    console.log(introduceData);
+
+    if (introduceData) {
       reset(defaultValues);
     }
-  }, [currentPost, defaultValues, reset]);
+  }, [introduceData, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      updateIntroduce(1, data);
+
       reset();
       preview.onFalse();
-      enqueueSnackbar(currentPost ? 'Update success!' : 'Create success!');
-      router.push(paths.dashboard.post.root);
+      enqueueSnackbar(introduceData ? 'Update success!' : 'Create success!');
+      router.push(paths.dashboard.root);
       console.info('DATA', data);
     } catch (error) {
       console.error(error);
@@ -95,18 +103,18 @@ export default function IntroductionViForm({ introduceData }: Props) {
       const file = acceptedFiles[0];
 
       const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file),
+        preview: `https://vdreamentertainment.com/assets/uploads/images/introduce/${file.name}`,
       });
 
       if (file) {
-        setValue('coverUrl', newFile, { shouldValidate: true });
+        setValue('image', newFile.preview, { shouldValidate: true });
       }
     },
     [setValue]
   );
 
   const handleRemoveFile = useCallback(() => {
-    setValue('coverUrl', null);
+    setValue('image', null);
   }, [setValue]);
 
   const renderDetails = (
@@ -127,14 +135,14 @@ export default function IntroductionViForm({ introduceData }: Props) {
           {!mdUp && <CardHeader title="Details" />}
 
           <Stack spacing={3} sx={{ p: 3 }}>
-            <RHFTextField name="title" label="Tiêu đề" />
+            <RHFTextField name="title_vi" label="Tiêu đề" />
 
-            <RHFTextField name="description" label="Mô tả" multiline rows={3} />
+            <RHFTextField name="describe_vi" label="Mô tả" multiline rows={3} />
 
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Hình ảnh</Typography>
               <RHFUpload
-                name="coverUrl"
+                name="image"
                 maxSize={3145728}
                 onDrop={handleDrop}
                 onDelete={handleRemoveFile}

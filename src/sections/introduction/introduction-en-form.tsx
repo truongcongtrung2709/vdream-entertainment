@@ -19,47 +19,48 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 
-import { IPostItem } from 'src/types/blog';
+import { IIntroduceItem } from 'src/types/introduce';
+import { updateIntroduce } from 'src/api/introduce';
+import useSWR, { KeyedMutator } from 'swr';
+import { fetcher } from 'src/utils/axios';
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  currentPost?: IPostItem;
+  introduceData: IIntroduceItem | null
 };
 
-export default function IntroductionEnForm({ currentPost }: Props) {
+export default function IntroductionEnForm({ introduceData }: Props) {
   const router = useRouter();
 
   const mdUp = useResponsive('up', 'md');
+
+
 
   const { enqueueSnackbar } = useSnackbar();
 
   const preview = useBoolean();
 
+
   const NewBlogSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
-    description: Yup.string().required('Description is required'),
-    content: Yup.string().required('Content is required'),
-    coverUrl: Yup.mixed<any>().nullable().required('Cover is required'),
-    tags: Yup.array().min(2, 'Must have at least 2 tags'),
-    metaKeywords: Yup.array().min(1, 'Meta keywords is required'),
-    // not required
-    metaTitle: Yup.string(),
-    metaDescription: Yup.string(),
+    id: Yup.number().required('Number is required'),
+    title_vi: Yup.string().required('Title is required'),
+    describe_vi: Yup.string().required('Description is required'),
+    image: Yup.mixed<any>().nullable().required('Image is required'),
+    title_en: Yup.string().required('Title is required'),
+    describe_en: Yup.string().required('Description is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      title: currentPost?.title || '',
-      description: currentPost?.description || '',
-      content: currentPost?.content || '',
-      coverUrl: currentPost?.coverUrl || null,
-      tags: currentPost?.tags || [],
-      metaKeywords: currentPost?.metaKeywords || [],
-      metaTitle: currentPost?.metaTitle || '',
-      metaDescription: currentPost?.metaDescription || '',
+      id: introduceData?.id || 1,
+      title_vi: introduceData?.title_vi || '',
+      describe_vi: introduceData?.describe_vi || '',
+      image: introduceData?.image || null,
+      title_en: introduceData?.title_en || '',
+      describe_en: introduceData?.describe_en || '',
     }),
-    [currentPost]
+    [introduceData]
   );
 
   const methods = useForm({
@@ -75,42 +76,24 @@ export default function IntroductionEnForm({ currentPost }: Props) {
   } = methods;
 
   useEffect(() => {
-    if (currentPost) {
+    if (introduceData) {
       reset(defaultValues);
     }
-  }, [currentPost, defaultValues, reset]);
+  }, [introduceData, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      updateIntroduce(1, data);
       reset();
       preview.onFalse();
-      enqueueSnackbar(currentPost ? 'Update success!' : 'Create success!');
-      router.push(paths.dashboard.post.root);
+      enqueueSnackbar(introduceData ? 'Update success!' : 'Create success!');
+      router.push(paths.dashboard.root);
       console.info('DATA', data);
     } catch (error) {
       console.error(error);
     }
   });
 
-  const handleDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-
-      const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      });
-
-      if (file) {
-        setValue('coverUrl', newFile, { shouldValidate: true });
-      }
-    },
-    [setValue]
-  );
-
-  const handleRemoveFile = useCallback(() => {
-    setValue('coverUrl', null);
-  }, [setValue]);
 
   const renderDetails = (
     <>
@@ -130,19 +113,10 @@ export default function IntroductionEnForm({ currentPost }: Props) {
           {!mdUp && <CardHeader title="Details" />}
 
           <Stack spacing={3} sx={{ p: 3 }}>
-            <RHFTextField name="title" label="Tiêu đề" />
+            <RHFTextField name="title_en" label="Tiêu đề" />
 
-            <RHFTextField name="description" label="Mô tả" multiline rows={3} />
+            <RHFTextField name="describe_en" label="Mô tả" multiline rows={3} />
 
-            <Stack spacing={1.5}>
-              <Typography variant="subtitle2">Hình ảnh</Typography>
-              <RHFUpload
-                name="coverUrl"
-                maxSize={3145728}
-                onDrop={handleDrop}
-                onDelete={handleRemoveFile}
-              />
-            </Stack>
           </Stack>
         </Card>
       </Grid>

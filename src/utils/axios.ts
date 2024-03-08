@@ -6,10 +6,15 @@ import { HOST_API } from 'src/config-global';
 
 const axiosInstance = axios.create({ baseURL: HOST_API });
 
-axiosInstance.interceptors.response.use(
-  (res) => res,
-  (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong')
-);
+axiosInstance.interceptors.request.use((config) => {
+  const access_token = localStorage.getItem('access_token'); // Assuming you store the access token in localStorage after login
+  if (access_token) {
+    config.headers.Authorization = `Bearer ${access_token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
 
 export default axiosInstance;
 
@@ -32,7 +37,8 @@ export const endpoints = {
     register: '/api/auth/register',
   },
   introduce: {
-    list: '/api/v1/introduce/list'
+    list: '/api/v1/introduce/list',
+    update: '/api/v1/introduce/update'
   },
   product: {
     list: '/api/product/list',
