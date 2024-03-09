@@ -62,7 +62,6 @@ export default function HomeAbout() {
         ratio="16/9"
         sx={{
           borderRadius: 1.5,
-          mb: { xs: 5, md: 10 },
         }}
       />
     </Container>

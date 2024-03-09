@@ -75,8 +75,6 @@ export default function HomeHero() {
           {mdUp && (
             <Grid xs={12} md={6} lg={7}>
               <Image
-                visibleByDefault
-                disabledEffect
                 alt="marketing market"
                 src={`https://vdreamentertainment.com/${introduceData?.image as unknown as string}`}
               />
