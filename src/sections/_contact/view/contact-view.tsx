@@ -71,7 +71,7 @@ export default function ContactView() {
               <Typography variant="overline">Mạng xã hội</Typography>
               <Stack direction="row">
                 {_socials.map((social) => (
-                  <IconButton key={social.value} color="inherit">
+                  <IconButton href={social.path} key={social.value} color="inherit">
                     <Iconify icon={social.icon} />
                   </IconButton>
                 ))}

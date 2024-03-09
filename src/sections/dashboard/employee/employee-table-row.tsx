@@ -16,13 +16,14 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 import { IUserItem } from 'src/types/user';
+import { IEmployeeItem } from 'src/types/employee';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   selected: boolean;
   onEditRow: VoidFunction;
-  row: IUserItem;
+  row: IEmployeeItem;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
 };
@@ -34,7 +35,7 @@ export default function EmployeeTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { name, avatarUrl, createAt } = row;
+  const { last_name, first_name, image, created_at } = row;
 
   const confirm = useBoolean();
 
@@ -43,17 +44,15 @@ export default function EmployeeTableRow({
   return (
     <>
       <TableRow hover selected={selected}>
-        <TableCell padding="checkbox">
-          <Checkbox checked={selected} onClick={onSelectRow} />
-        </TableCell>
+
 
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
+          <Avatar alt={first_name} src={`https://vdreamentertainment.com/${image}`} sx={{ mr: 2 }} />
 
-          <Typography variant="subtitle2">{name}</Typography>
+          <Typography variant="subtitle2">{first_name} {last_name}</Typography>
         </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(createAt)}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(created_at)}</TableCell>
 
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
@@ -76,7 +75,7 @@ export default function EmployeeTableRow({
           sx={{ color: 'error.main' }}
         >
           <Iconify icon="solar:trash-bin-trash-bold" />
-          Delete
+          Xóa
         </MenuItem>
 
         <MenuItem
@@ -86,18 +85,18 @@ export default function EmployeeTableRow({
           }}
         >
           <Iconify icon="solar:pen-bold" />
-          Edit
+          Chỉnh sửa
         </MenuItem>
       </CustomPopover>
 
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title="Xóa"
+        content="Bạn có muốn xóa?"
         action={
           <Button variant="contained" color="error" onClick={onDeleteRow}>
-            Delete
+            Xóa
           </Button>
         }
       />

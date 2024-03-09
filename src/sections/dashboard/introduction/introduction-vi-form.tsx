@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMemo, useEffect, useCallback } from 'react';
+import { useMemo, useEffect, useCallback, useState } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -28,28 +28,26 @@ import useSWR, { KeyedMutator } from 'swr';
 // ----------------------------------------------------------------------
 
 type Props = {
-  introduceData: IIntroduceItem | null
+  introduceData: IIntroduceItem | null,
+  refreshIntroduces: KeyedMutator<any>
 };
 
-export default function IntroductionViForm({ introduceData }: Props) {
+export default function IntroductionViForm({ introduceData, refreshIntroduces }: Props) {
   const router = useRouter();
 
   const mdUp = useResponsive('up', 'md');
 
 
-
+  const [imageFile, setImageFile] = useState<File>()
   const { enqueueSnackbar } = useSnackbar();
 
-  const preview = useBoolean();
 
 
   const NewBlogSchema = Yup.object().shape({
-    id: Yup.number().required('Number is required'),
-    title_vi: Yup.string().required('Title is required'),
-    describe_vi: Yup.string().required('Description is required'),
-    image: Yup.mixed<any>().nullable().required('Image is required'),
-    title_en: Yup.string().required('Title is required'),
-    describe_en: Yup.string().required('Description is required'),
+    id: Yup.number(),
+    title_vi: Yup.string().required('Bắt buộc phải có tiêu đề'),
+    describe_vi: Yup.string().required('Bắt buộc phải có mô tả'),
+    image: Yup.mixed<any>().nullable().required('Bắt buộc phải có hình ảnh'),
   });
 
   const defaultValues = useMemo(
@@ -57,9 +55,7 @@ export default function IntroductionViForm({ introduceData }: Props) {
       id: introduceData?.id || 1,
       title_vi: introduceData?.title_vi || '',
       describe_vi: introduceData?.describe_vi || '',
-      image: introduceData?.image || null,
-      title_en: introduceData?.title_en || '',
-      describe_en: introduceData?.describe_en || '',
+      image: `https://vdreamentertainment.com/${introduceData?.image}` || '',
     }),
     [introduceData]
   );
@@ -79,17 +75,29 @@ export default function IntroductionViForm({ introduceData }: Props) {
   useEffect(() => {
 
     if (introduceData) {
+      console.log(introduceData);
+
       reset(defaultValues);
     }
   }, [introduceData, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      updateIntroduce(1, data);
+      const formData = new FormData();
 
-      reset();
-      preview.onFalse();
-      enqueueSnackbar(introduceData ? 'Update success!' : 'Create success!');
+      if (imageFile) {
+        formData.append('image', imageFile);
+      } else if (introduceData && introduceData.image) {
+        formData.append('image', introduceData.image);
+      }
+
+      formData.append('title_vi', data.title_vi);
+      formData.append('describe_vi', data.describe_vi);
+
+      await updateIntroduce(1, formData);
+
+      enqueueSnackbar(introduceData ? 'Cập nhật thành công!' : 'Tạo thành công!');
+      refreshIntroduces();
       router.push(paths.dashboard.root);
       console.info('DATA', data);
     } catch (error) {
@@ -100,13 +108,11 @@ export default function IntroductionViForm({ introduceData }: Props) {
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
-
-      const newFile = Object.assign(file, {
-        preview: `https://vdreamentertainment.com/assets/uploads/images/introduce/${file.name}`,
-      });
-
       if (file) {
-        setValue('image', newFile.preview, { shouldValidate: true });
+        setImageFile(file);
+
+        const fileUrl = URL.createObjectURL(file);
+        setValue('image', fileUrl, { shouldValidate: true });
       }
     },
     [setValue]

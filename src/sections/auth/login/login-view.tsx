@@ -38,14 +38,14 @@ export default function LoginView() {
   const returnTo = searchParams.get('returnTo');
 
   const LoginSchema = Yup.object().shape({
-    username: Yup.string().required('username is required'),
+    username: Yup.string().required('Tên đăng nhập phải có'),
     password: Yup.string()
-      .required('Password is required')
+      .required('Mật khẩu phải có')
   });
 
   const defaultValues = {
-    username: 'dream',
-    password: '123456',
+    username: '',
+    password: '',
   };
 
   const methods = useForm({
@@ -67,7 +67,7 @@ export default function LoginView() {
     } catch (error) {
       console.error(error);
       reset();
-      setErrorMsg(typeof error === 'string' ? error : error.message);
+      setErrorMsg(typeof error === 'string' ? error : "Tên Đăng nhập hoặc mật khẩu không đúng");
     }
   });
 

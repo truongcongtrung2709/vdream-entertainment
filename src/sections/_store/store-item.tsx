@@ -27,7 +27,7 @@ export default function StoreItem({ item }: Props) {
 
   return (
     <div>
-      <Image src={image} alt={name_en} ratio="1/1" sx={{ borderRadius: 2 }} />
+      <Image src={`https://vdreamentertainment.com/${image}`} alt={name_en} ratio="1/1" sx={{ borderRadius: 2 }} />
 
       <Stack spacing={1} sx={{ pt: 2.5, px: 2.5 }}>
         <Typography variant="overline" sx={{ color: 'text.disabled' }}>

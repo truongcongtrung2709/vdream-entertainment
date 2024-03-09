@@ -5,10 +5,9 @@ import Typography from '@mui/material/Typography';
 import { localStorageGetItem } from 'src/utils/storage-available';
 
 import { useTranslate } from 'src/locales';
-import { HOST_API } from 'src/config-global';
-import { useGetAbouts } from 'src/api/about-us';
 
 import Image from 'src/components/image';
+import { useGetAbouts } from 'src/api/about';
 
 // ----------------------------------------------------------------------
 
@@ -59,7 +58,7 @@ export default function HomeAbout() {
       </Grid>
       <Image
         alt="landing about"
-        src={aboutsData?.image}
+        src={`https://vdreamentertainment.com/${aboutsData?.image}`}
         ratio="16/9"
         sx={{
           borderRadius: 1.5,

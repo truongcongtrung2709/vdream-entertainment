@@ -10,8 +10,11 @@ import Container from '@mui/material/Container';
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 
-import IntroductionViForm from '../about-us-vi-form';
+import About from '../about-us-vi-form';
 import IntroductionEnForm from '../about-us-en-form';
+import { useGetAbouts } from 'src/api/about';
+import AboutViForm from '../about-us-vi-form';
+import AboutEnForm from '../about-us-en-form';
 
 // ----------------------------------------------------------------------
 
@@ -35,6 +38,10 @@ export default function AboutUsView() {
 
   const [currentTab, setCurrentTab] = useState('vietnamese');
 
+  const { abouts, refreshAbouts } = useGetAbouts()
+
+  const aboutData = abouts.length > 0 ? abouts[0] : null;
+
   const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
     setCurrentTab(newValue);
   }, []);
@@ -57,9 +64,9 @@ export default function AboutUsView() {
         ))}
       </Tabs>
 
-      {currentTab === 'vietnamese' && <IntroductionViForm />}
+      {currentTab === 'vietnamese' && <AboutViForm aboutData={aboutData} refreshAbouts={refreshAbouts} />}
 
-      {currentTab === 'english' && <IntroductionEnForm />}
+      {currentTab === 'english' && <AboutEnForm aboutData={aboutData} refreshAbouts={refreshAbouts} />}
     </Container>
   );
 }

@@ -5,16 +5,17 @@ import React, { useState, useCallback } from 'react';
 import Container from '@mui/material/Container';
 import { Tab, Tabs, Typography } from '@mui/material';
 
-import { useGetProduct } from 'src/api/product';
-
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 
-import StoreNewEditViForm from '../store-new-edit-vi-form';
-import StoreNewEditEnForm from '../store-new-edit-en-form';
+import StoreNewEditViForm from '../store-edit-vi-form';
+import StoreNewEditEnForm from '../store-edit-en-form';
+import { useGetItem } from 'src/api/item';
+import StoreEditViForm from '../store-edit-vi-form';
+import StoreEditEnForm from '../store-edit-en-form';
 
 type Props = {
-  id: string;
+  id: number;
 };
 
 const TABS = [
@@ -34,7 +35,8 @@ const TABS = [
 export default function StoreEditView({ id }: Props) {
   const settings = useSettingsContext();
 
-  const { product: currentProduct } = useGetProduct(id);
+  const { item: currentItem } = useGetItem(id);
+
 
   const [currentTab, setCurrentTab] = useState('vietnamese');
 
@@ -60,9 +62,9 @@ export default function StoreEditView({ id }: Props) {
         ))}
       </Tabs>
 
-      {currentTab === 'vietnamese' && <StoreNewEditViForm currentProduct={currentProduct} />}
+      {currentTab === 'vietnamese' && <StoreEditViForm currentItem={currentItem} />}
 
-      {currentTab === 'english' && <StoreNewEditEnForm currentProduct={currentProduct} />}
+      {currentTab === 'english' && <StoreEditEnForm currentItem={currentItem} />}
     </Container>
   );
 }

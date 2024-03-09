@@ -37,7 +37,7 @@ export default function CollaborationView() {
           mb: { xs: 8, md: 10 },
         }}
       >
-        Content đối tác
+        {t("Nhờ vào đội ngũ chuyên gia có kinh nghiệm trong lĩnh vực cùng với các thành viên đầy tài năng của V-Dream, mong rằng chúng mình sẽ mang lại được cho các bạn những trải nghiệm đáng nhớ.")}
       </Typography>
 
       <Box
@@ -61,7 +61,7 @@ export default function CollaborationView() {
               disabledEffect
               borderRadius={10}
               alt={item.name_en}
-              src={item.image}
+              src={`https://vdreamentertainment.com/${item.image}`}
             />
 
             <Typography variant="h5" sx={{ mt: 5, mb: 2 }}>

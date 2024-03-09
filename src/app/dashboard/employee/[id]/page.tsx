@@ -1,4 +1,3 @@
-import { _userList } from 'src/_mock/_user';
 import { EmployeeEditView } from 'src/sections/dashboard/employee/view';
 
 
@@ -11,7 +10,7 @@ export const metadata = {
 
 type Props = {
   params: {
-    id: string;
+    id: number;
   };
 };
 
@@ -21,8 +20,3 @@ export default function UserEditPage({ params }: Props) {
   return <EmployeeEditView id={id} />;
 }
 
-export async function generateStaticParams() {
-  return _userList.map((user) => ({
-    id: user.id,
-  }));
-}

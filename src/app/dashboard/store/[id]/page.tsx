@@ -1,5 +1,4 @@
 import { StoreEditView } from 'src/sections/dashboard/store/view';
-import axios, { endpoints } from 'src/utils/axios';
 
 
 // ----------------------------------------------------------------------
@@ -10,7 +9,7 @@ export const metadata = {
 
 type Props = {
   params: {
-    id: string;
+    id: number;
   };
 };
 

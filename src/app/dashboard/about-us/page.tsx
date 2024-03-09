@@ -3,7 +3,7 @@ import { AboutUsView } from 'src/sections/about-us/view';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Dashboard: App',
+  title: 'Dashboard: About',
 };
 
 export default function OverviewAppPage() {

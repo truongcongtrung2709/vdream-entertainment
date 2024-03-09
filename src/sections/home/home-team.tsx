@@ -16,7 +16,7 @@ type Props = {
 };
 
 export default function HomeTeam({ members }: Props) {
-  const {t} = useTranslate()
+  const { t } = useTranslate()
   return (
     <Container
       sx={{
@@ -36,8 +36,8 @@ export default function HomeTeam({ members }: Props) {
           {t("Đội ngũ")}
         </Typography>
 
-        <Typography variant="h2" sx={{ my: 3, width:{md:500} }}>
-        {t("Đội ngủ trẻ trung, tài năng và nhiệt quyết")}
+        <Typography variant="h2" sx={{ my: 3, width: { md: 500 } }}>
+          {t("Đội ngủ trẻ trung, tài năng và nhiệt quyết")}
         </Typography>
       </Grid>
 
@@ -53,8 +53,8 @@ export default function HomeTeam({ members }: Props) {
           },
         }}
       >
-        {members.map((member) => (
-          <HomeTeamItem key={member.id} member={member} />
+        {members.map((member, index) => (
+          <HomeTeamItem key={index} member={member} />
         ))}
       </Box>
     </Container>

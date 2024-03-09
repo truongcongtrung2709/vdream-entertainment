@@ -28,9 +28,10 @@ import { fetcher } from 'src/utils/axios';
 
 type Props = {
   introduceData: IIntroduceItem | null
+  refreshIntroduces: KeyedMutator<any>
 };
 
-export default function IntroductionEnForm({ introduceData }: Props) {
+export default function IntroductionEnForm({ introduceData, refreshIntroduces }: Props) {
   const router = useRouter();
 
   const mdUp = useResponsive('up', 'md');
@@ -39,24 +40,17 @@ export default function IntroductionEnForm({ introduceData }: Props) {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const preview = useBoolean();
 
 
   const NewBlogSchema = Yup.object().shape({
-    id: Yup.number().required('Number is required'),
-    title_vi: Yup.string().required('Title is required'),
-    describe_vi: Yup.string().required('Description is required'),
-    image: Yup.mixed<any>().nullable().required('Image is required'),
-    title_en: Yup.string().required('Title is required'),
-    describe_en: Yup.string().required('Description is required'),
+    id: Yup.number(),
+    title_en: Yup.string().required('Bắt buộc phải có tiêu đề'),
+    describe_en: Yup.string().required('Bắt buộc phải có mô tả'),
   });
 
   const defaultValues = useMemo(
     () => ({
       id: introduceData?.id || 1,
-      title_vi: introduceData?.title_vi || '',
-      describe_vi: introduceData?.describe_vi || '',
-      image: introduceData?.image || null,
       title_en: introduceData?.title_en || '',
       describe_en: introduceData?.describe_en || '',
     }),
@@ -83,10 +77,14 @@ export default function IntroductionEnForm({ introduceData }: Props) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      updateIntroduce(1, data);
-      reset();
-      preview.onFalse();
-      enqueueSnackbar(introduceData ? 'Update success!' : 'Create success!');
+      const formData = new FormData();
+      formData.append('title_en', data.title_en);
+      formData.append('describe_en', data.describe_en);
+
+      await updateIntroduce(1, formData);
+
+      enqueueSnackbar(introduceData ? 'Cập nhật thành công!' : 'Tạo thành công!');
+      refreshIntroduces();
       router.push(paths.dashboard.root);
       console.info('DATA', data);
     } catch (error) {

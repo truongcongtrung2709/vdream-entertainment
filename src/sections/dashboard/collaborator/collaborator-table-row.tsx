@@ -3,7 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import { Typography } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 
@@ -15,14 +14,14 @@ import Iconify from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-import { IUserItem } from 'src/types/user';
+import { IPartnerItem } from 'src/types/partner';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   selected: boolean;
   onEditRow: VoidFunction;
-  row: IUserItem;
+  row: IPartnerItem;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
 };
@@ -34,7 +33,7 @@ export default function CollaboratorTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { name, avatarUrl, createAt, description } = row;
+  const { name_vi, describe_vi, image, created_at } = row;
 
   const confirm = useBoolean();
 
@@ -43,19 +42,15 @@ export default function CollaboratorTableRow({
   return (
     <>
       <TableRow hover selected={selected}>
-        <TableCell padding="checkbox">
-          <Checkbox checked={selected} onClick={onSelectRow} />
-        </TableCell>
-
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
+          <Avatar alt={name_vi} src={`https://vdreamentertainment.com/${image}`} sx={{ mr: 2 }} />
 
-          <Typography variant="subtitle2">{name}</Typography>
+          <Typography variant="subtitle2">{name_vi}</Typography>
         </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(createAt)}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(created_at)}</TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{description}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{describe_vi}</TableCell>
 
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>

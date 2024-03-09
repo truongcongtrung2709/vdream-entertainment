@@ -5,65 +5,57 @@ import { useMemo, useEffect, useCallback, useState } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
+import { CardHeader } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
-import { useBoolean } from 'src/hooks/use-boolean';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 
-import { HOST_API } from 'src/config-global';
-import { fetcher } from 'src/utils/axios';
-import useSWR, { KeyedMutator } from 'swr';
-import { updateAbout } from 'src/api/about';
-import { IAboutItem } from 'src/types/about';
+import { IItem } from 'src/types/item';
+import { addItem, updateItem } from 'src/api/item';
+import { mutate } from 'swr';
+import { endpoints } from 'src/utils/axios';
 
 // ----------------------------------------------------------------------
 
-type Props = {
-  aboutData: IAboutItem | null,
-  refreshAbouts: KeyedMutator<any>
-};
 
-export default function IntroductionViForm({ aboutData, refreshAbouts }: Props) {
-  const router = useRouter();
 
+export default function StoreNewForm() {
   const mdUp = useResponsive('up', 'md');
 
+  const router = useRouter();
 
   const [imageFile, setImageFile] = useState<File>()
+
   const { enqueueSnackbar } = useSnackbar();
 
-
-
-  const NewBlogSchema = Yup.object().shape({
-    id: Yup.number(),
-    title_vi: Yup.string().required('Bắt buộc phải có tiêu đề'),
-    describe_vi: Yup.string().required('Bắt buộc phải có mô tả'),
-    image: Yup.mixed<any>().nullable().required('Bắt buộc phải có hình ảnh'),
+  const NewProductSchema = Yup.object().shape({
+    name_vi: Yup.string().required('Bắt buộc phải có tên'),
+    name_en: Yup.string().required('Bắt buộc phải có tên'),
+    image: Yup.mixed<any>().nullable().required('Bắt buộc phải có hình'),
+    price_vi: Yup.number().required('Bắt buộc phải có giá'),
+    price_en: Yup.number().required('Bắt buộc phải có giá'),
+    link_youtube: Yup.string().required('Bắt buộc phải có link youtube'),
   });
 
-  const defaultValues = useMemo(
-    () => ({
-      id: aboutData?.id || 1,
-      title_vi: aboutData?.title_vi || '',
-      describe_vi: aboutData?.describe_vi || '',
-      image: `https://vdreamentertainment.com/${aboutData?.image}` || '',
-      title_en: aboutData?.title_en || '',
-      describe_en: aboutData?.describe_en || '',
-    }),
-    [aboutData]
-  );
+  const defaultValues = {
+    name_vi: '',
+    name_en: '',
+    image: '',
+    price_vi: 0,
+    price_en: 0,
+    link_youtube: ''
+  };
 
   const methods = useForm({
-    resolver: yupResolver(NewBlogSchema),
+    resolver: yupResolver(NewProductSchema),
     defaultValues,
   });
 
@@ -74,33 +66,31 @@ export default function IntroductionViForm({ aboutData, refreshAbouts }: Props) 
     formState: { isSubmitting },
   } = methods;
 
-  useEffect(() => {
-
-    if (aboutData) {
-      console.log(aboutData);
-
-      reset(defaultValues);
-    }
-  }, [aboutData, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log('Submitted Data:', data);
     try {
       const formData = new FormData();
-
+      formData.append('name_vi', data.name_vi);
+      formData.append('name_en', data.name_en);
+      formData.append('price_vi', data.price_vi as unknown as string);
+      formData.append('price_en', data.price_en as unknown as string);
+      formData.append('link_youtube', data.link_youtube);
       if (imageFile) {
         formData.append('image', imageFile);
-      } else if (aboutData && aboutData.image) {
-        formData.append('image', aboutData.image);
+      } else {
+        formData.append('image', '');
       }
 
-      formData.append('title_vi', data.title_vi);
-      formData.append('describe_vi', data.describe_vi);
+      // Determine whether to update or add item
+      await addItem(formData);
 
-      await updateAbout(1, formData);
 
-      enqueueSnackbar(aboutData ? 'Cập nhật thành công!' : 'Tạo thành công!');
-      refreshAbouts();
-      router.push(paths.dashboard.about.root);
+      // Reset form, refresh item list, show success message, and navigate
+      reset();
+      mutate(endpoints.item.list);
+      enqueueSnackbar('Tạo mới thành công!');
+      router.push(paths.dashboard.store.root);
       console.info('DATA', data);
     } catch (error) {
       console.error(error);
@@ -129,10 +119,10 @@ export default function IntroductionViForm({ aboutData, refreshAbouts }: Props) 
       {mdUp && (
         <Grid md={4}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
-            Giới thiệu
+            Chi tiết
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Tiêu đề, mô tả
+            tên sản phẩm, giá bán
           </Typography>
         </Grid>
       )}
@@ -142,9 +132,15 @@ export default function IntroductionViForm({ aboutData, refreshAbouts }: Props) 
           {!mdUp && <CardHeader title="Details" />}
 
           <Stack spacing={3} sx={{ p: 3 }}>
-            <RHFTextField name="title_vi" label="Tiêu đề" />
+            <RHFTextField name="name_vi" label="Tên tiếng việt của sản phẩm" />
 
-            <RHFTextField name="describe_vi" label="Mô tả" multiline rows={3} />
+            <RHFTextField name="name_en" label="Tên tiếng anh của sản phẩm" />
+
+            <RHFTextField name="price_vi" label="Giá bán VNĐ" />
+
+            <RHFTextField name="price_en" label="Giá bán USD" />
+
+            <RHFTextField name="link_youtube" label="Link youtube" />
 
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Hình ảnh</Typography>
@@ -173,7 +169,7 @@ export default function IntroductionViForm({ aboutData, refreshAbouts }: Props) 
           loading={isSubmitting}
           sx={{ mr: 2 }}
         >
-          Cập nhât
+          Tạo Sản phẩm
         </LoadingButton>
       </Grid>
     </FormProvider>

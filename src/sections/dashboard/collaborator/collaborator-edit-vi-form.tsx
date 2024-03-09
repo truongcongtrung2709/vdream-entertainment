@@ -5,65 +5,56 @@ import { useMemo, useEffect, useCallback, useState } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
+import { CardHeader } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
-import { useBoolean } from 'src/hooks/use-boolean';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 
-import { HOST_API } from 'src/config-global';
-import { fetcher } from 'src/utils/axios';
-import useSWR, { KeyedMutator } from 'swr';
-import { updateAbout } from 'src/api/about';
-import { IAboutItem } from 'src/types/about';
+import { mutate } from 'swr';
+import { endpoints } from 'src/utils/axios';
+import { IPartnerItem } from 'src/types/partner';
+import { updatePartner } from 'src/api/partner';
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  aboutData: IAboutItem | null,
-  refreshAbouts: KeyedMutator<any>
+  currentPartner?: IPartnerItem;
 };
 
-export default function IntroductionViForm({ aboutData, refreshAbouts }: Props) {
-  const router = useRouter();
-
+export default function CollaboratorEditViForm({ currentPartner }: Props) {
   const mdUp = useResponsive('up', 'md');
 
+  const router = useRouter();
 
   const [imageFile, setImageFile] = useState<File>()
+
   const { enqueueSnackbar } = useSnackbar();
 
-
-
-  const NewBlogSchema = Yup.object().shape({
-    id: Yup.number(),
-    title_vi: Yup.string().required('Bắt buộc phải có tiêu đề'),
-    describe_vi: Yup.string().required('Bắt buộc phải có mô tả'),
-    image: Yup.mixed<any>().nullable().required('Bắt buộc phải có hình ảnh'),
+  const NewPartnerSchema = Yup.object().shape({
+    name_vi: Yup.string().required('Phải có tên'),
+    image: Yup.mixed<any>().nullable().required('Phải có hình'),
+    describe_vi: Yup.string().required('Phải có mô tả'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      id: aboutData?.id || 1,
-      title_vi: aboutData?.title_vi || '',
-      describe_vi: aboutData?.describe_vi || '',
-      image: `https://vdreamentertainment.com/${aboutData?.image}` || '',
-      title_en: aboutData?.title_en || '',
-      describe_en: aboutData?.describe_en || '',
+      name_vi: currentPartner?.name_vi || '',
+      image: `https://vdreamentertainment.com/${currentPartner?.image}` || '',
+      describe_vi: currentPartner?.describe_vi || '',
     }),
-    [aboutData]
+    [currentPartner]
   );
 
   const methods = useForm({
-    resolver: yupResolver(NewBlogSchema),
+    resolver: yupResolver(NewPartnerSchema),
     defaultValues,
   });
 
@@ -75,32 +66,35 @@ export default function IntroductionViForm({ aboutData, refreshAbouts }: Props) 
   } = methods;
 
   useEffect(() => {
-
-    if (aboutData) {
-      console.log(aboutData);
-
+    if (currentPartner) {
       reset(defaultValues);
     }
-  }, [aboutData, defaultValues, reset]);
+  }, [currentPartner, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log('Submitted Data:', data);
     try {
       const formData = new FormData();
-
-      if (imageFile) {
-        formData.append('image', imageFile);
-      } else if (aboutData && aboutData.image) {
-        formData.append('image', aboutData.image);
-      }
-
-      formData.append('title_vi', data.title_vi);
+      formData.append('name_vi', data.name_vi);
       formData.append('describe_vi', data.describe_vi);
 
-      await updateAbout(1, formData);
+      // Append image to formData if imageFile exists or if currentPartner has an image
+      if (imageFile) {
+        formData.append('image', imageFile);
+      } else if (currentPartner && currentPartner.image) {
+        formData.append('image', currentPartner.image);
+      }
 
-      enqueueSnackbar(aboutData ? 'Cập nhật thành công!' : 'Tạo thành công!');
-      refreshAbouts();
-      router.push(paths.dashboard.about.root);
+      // Determine whether to update or add item
+      await updatePartner(currentPartner?.id, formData);
+      console.log('Update item with ID:', currentPartner?.id);
+
+
+      // Reset form, refresh item list, show success message, and navigate
+      reset();
+      mutate(endpoints.item.list);
+      enqueueSnackbar('Cập nhật thành công!');
+      router.push(paths.dashboard.collaborator.root);
       console.info('DATA', data);
     } catch (error) {
       console.error(error);
@@ -129,22 +123,22 @@ export default function IntroductionViForm({ aboutData, refreshAbouts }: Props) 
       {mdUp && (
         <Grid md={4}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
-            Giới thiệu
+            Chi tiết
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Tiêu đề, mô tả
+            tên Đối tác, mô tả,...
           </Typography>
         </Grid>
       )}
 
       <Grid xs={12} md={8}>
         <Card>
-          {!mdUp && <CardHeader title="Details" />}
+          {!mdUp && <CardHeader title="Chi tiết" />}
 
           <Stack spacing={3} sx={{ p: 3 }}>
-            <RHFTextField name="title_vi" label="Tiêu đề" />
+            <RHFTextField name="name_vi" label="Tên đối tác" />
 
-            <RHFTextField name="describe_vi" label="Mô tả" multiline rows={3} />
+            <RHFTextField name="describe_vi" label="Mô tả" />
 
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Hình ảnh</Typography>
@@ -173,7 +167,7 @@ export default function IntroductionViForm({ aboutData, refreshAbouts }: Props) 
           loading={isSubmitting}
           sx={{ mr: 2 }}
         >
-          Cập nhât
+          {!currentPartner ? 'Tạo nhân viên' : 'Cập nhật'}
         </LoadingButton>
       </Grid>
     </FormProvider>

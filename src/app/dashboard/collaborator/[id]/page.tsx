@@ -1,4 +1,3 @@
-import { _userList } from 'src/_mock/_user';
 import { CollaboratorEditView } from 'src/sections/dashboard/collaborator/view';
 
 
@@ -10,7 +9,7 @@ export const metadata = {
 
 type Props = {
   params: {
-    id: string;
+    id: number;
   };
 };
 
@@ -20,8 +19,4 @@ export default function CollaboratorEditPage({ params }: Props) {
   return <CollaboratorEditView id={id} />;
 }
 
-export async function generateStaticParams() {
-  return _userList.map((user) => ({
-    id: user.id,
-  }));
-}
+

@@ -1,65 +1,58 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMemo, useEffect, useCallback } from 'react';
+import { useMemo, useEffect, useCallback, useState } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
+import { CardHeader } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
-import { useBoolean } from 'src/hooks/use-boolean';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 
-import { IIntroduceItem } from 'src/types/introduce';
-import { updateIntroduce } from 'src/api/introduce';
-import useSWR, { KeyedMutator } from 'swr';
-import { fetcher } from 'src/utils/axios';
-import { updateAbout } from 'src/api/about';
+import { mutate } from 'swr';
+import { endpoints } from 'src/utils/axios';
+import { IPartnerItem } from 'src/types/partner';
+import { updatePartner } from 'src/api/partner';
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  aboutData: IIntroduceItem | null
-  refreshAbouts: KeyedMutator<any>
+  currentPartner?: IPartnerItem;
 };
 
-export default function IntroductionEnForm({ aboutData, refreshAbouts }: Props) {
-  const router = useRouter();
-
+export default function CollaboratorEditEnForm({ currentPartner }: Props) {
   const mdUp = useResponsive('up', 'md');
 
+  const router = useRouter();
 
+  const [imageFile, setImageFile] = useState<File>()
 
   const { enqueueSnackbar } = useSnackbar();
 
-
-
-  const NewBlogSchema = Yup.object().shape({
-    id: Yup.number(),
-    title_en: Yup.string().required('Bắt buộc phải có tiêu đề'),
-    describe_en: Yup.string().required('Bắt buộc phải có mô tả'),
+  const NewPartnerSchema = Yup.object().shape({
+    name_en: Yup.string().required('Phải có tên'),
+    describe_en: Yup.string().required('Phải có mô tả'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      id: aboutData?.id || 1,
-      title_en: aboutData?.title_en || '',
-      describe_en: aboutData?.describe_en || '',
+      name_en: currentPartner?.name_en || '',
+      describe_en: currentPartner?.describe_en || '',
     }),
-    [aboutData]
+    [currentPartner]
   );
 
   const methods = useForm({
-    resolver: yupResolver(NewBlogSchema),
+    resolver: yupResolver(NewPartnerSchema),
     defaultValues,
   });
 
@@ -71,22 +64,29 @@ export default function IntroductionEnForm({ aboutData, refreshAbouts }: Props) 
   } = methods;
 
   useEffect(() => {
-    if (aboutData) {
+    if (currentPartner) {
       reset(defaultValues);
     }
-  }, [aboutData, defaultValues, reset]);
+  }, [currentPartner, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log('Submitted Data:', data);
     try {
       const formData = new FormData();
-      formData.append('title_en', data.title_en);
+      formData.append('name_en', data.name_en);
       formData.append('describe_en', data.describe_en);
 
-      await updateAbout(1, formData);
 
-      enqueueSnackbar(aboutData ? 'Cập nhật thành công!' : 'Tạo thành công!');
-      refreshAbouts();
-      router.push(paths.dashboard.about.root);
+      // Determine whether to update or add item
+      await updatePartner(currentPartner?.id, formData);
+      console.log('Update item with ID:', currentPartner?.id);
+
+
+      // Reset form, refresh item list, show success message, and navigate
+      reset();
+      mutate(endpoints.item.list);
+      enqueueSnackbar('Cập nhật thành công!');
+      router.push(paths.dashboard.collaborator.root);
       console.info('DATA', data);
     } catch (error) {
       console.error(error);
@@ -94,15 +94,16 @@ export default function IntroductionEnForm({ aboutData, refreshAbouts }: Props) 
   });
 
 
+
   const renderDetails = (
     <>
       {mdUp && (
         <Grid md={4}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
-            Giới thiệu
+            Chi tiết
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Tiêu đề, mô tả
+            tên Đối tác, mô tả,...
           </Typography>
         </Grid>
       )}
@@ -112,9 +113,9 @@ export default function IntroductionEnForm({ aboutData, refreshAbouts }: Props) 
           {!mdUp && <CardHeader title="Details" />}
 
           <Stack spacing={3} sx={{ p: 3 }}>
-            <RHFTextField name="title_en" label="Tiêu đề" />
+            <RHFTextField name="name_en" label="Tên đối tác" />
 
-            <RHFTextField name="describe_en" label="Mô tả" multiline rows={3} />
+            <RHFTextField name="describe_en" label="Mô tả" />
 
           </Stack>
         </Card>
@@ -134,7 +135,7 @@ export default function IntroductionEnForm({ aboutData, refreshAbouts }: Props) 
           loading={isSubmitting}
           sx={{ mr: 2 }}
         >
-          Cập nhât
+          {!currentPartner ? 'Tạo nhân viên' : 'Cập nhật'}
         </LoadingButton>
       </Grid>
     </FormProvider>

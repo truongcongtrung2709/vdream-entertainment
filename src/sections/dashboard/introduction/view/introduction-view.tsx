@@ -36,7 +36,7 @@ export default function IntroductionView() {
 
   const [currentTab, setCurrentTab] = useState('vietnamese');
 
-  const { introduces } = useGetIntroduces()
+  const { introduces, refreshIntroduces } = useGetIntroduces()
   const introduceData = introduces.length > 0 ? introduces[0] : null;
 
   const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
@@ -63,9 +63,9 @@ export default function IntroductionView() {
         ))}
       </Tabs>
 
-      {currentTab === 'vietnamese' && <IntroductionViForm introduceData={introduceData} />}
+      {currentTab === 'vietnamese' && <IntroductionViForm introduceData={introduceData} refreshIntroduces={refreshIntroduces} />}
 
-      {currentTab === 'english' && <IntroductionEnForm introduceData={introduceData} />}
+      {currentTab === 'english' && <IntroductionEnForm introduceData={introduceData} refreshIntroduces={refreshIntroduces} />}
     </Container>
   );
 }

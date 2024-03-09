@@ -1,16 +1,15 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
+import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
-import IconButton from '@mui/material/IconButton';
-import { Stack, Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 
 import { paths } from 'src/routes/paths';
@@ -19,39 +18,38 @@ import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { _userList } from 'src/_mock';
+
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-import { ConfirmDialog } from 'src/components/custom-dialog';
 import { useSettingsContext } from 'src/components/settings';
 import {
   useTable,
   emptyRows,
   TableNoData,
   getComparator,
+  TableSkeleton,
   TableEmptyRows,
   TableHeadCustom,
-  TableSelectedAction,
   TablePaginationCustom,
 } from 'src/components/table';
 
-import { IUserItem, IUserTableFilters } from 'src/types/user';
 
+import { IEmployeeItem, IEmployeeTableFilters } from 'src/types/employee';
+import { useDeleteEmployee, useGetEmployees } from 'src/api/employee';
 import EmployeeTableRow from '../employee-table-row';
 
-// ----------------------------------------------------------------------
+// --------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Nhân viên' },
-  { id: 'createAt', label: 'Ngày tạo' },
+  { id: 'first_name', label: 'Tên', width: 300 },
+  { id: 'created_at', label: 'Ngày tạo', width: 180 },
+
   { id: '', width: 88 },
 ];
 
-const defaultFilters: IUserTableFilters = {
-  name: '',
-  role: [],
-  status: 'all',
+const defaultFilters: IEmployeeTableFilters = {
+  first_name: '',
 };
 
 // ----------------------------------------------------------------------
@@ -59,15 +57,22 @@ const defaultFilters: IUserTableFilters = {
 export default function EmployeeListView() {
   const table = useTable();
 
+
   const settings = useSettingsContext();
 
   const router = useRouter();
 
   const confirm = useBoolean();
 
-  const [tableData, setTableData] = useState(_userList);
+  const [tableData, setTableData] = useState<IEmployeeItem[]>([]);
 
-  const [filters] = useState(defaultFilters);
+  const [filters, setFilters] = useState(defaultFilters);
+
+  const { employees, employeesLoading, employeesEmpty } = useGetEmployees();
+
+  useEffect(() => {
+    setTableData(employees);
+  }, [employees]);
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -84,71 +89,64 @@ export default function EmployeeListView() {
 
   const canReset = !isEqual(defaultFilters, filters);
 
-  const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
+  const notFound = (!dataFiltered.length && canReset) || employeesEmpty;
+
+
+  const deleteEmployee = useDeleteEmployee();
 
   const handleDeleteRow = useCallback(
-    (id: string) => {
-      const deleteRow = tableData.filter((row) => row.id !== id);
-      setTableData(deleteRow);
+    async (id: number) => {
+      try {
+        console.log(id);
+        deleteEmployee(id)
+        const updatedTableData = tableData.filter((row) => row.id !== id);
+        setTableData(updatedTableData);
 
-      table.onUpdatePageDeleteRow(dataInPage.length);
+        table.onUpdatePageDeleteRow(dataInPage.length);
+      } catch (error) {
+        console.error('Error deleting user:', error);
+      }
     },
-    [dataInPage.length, table, tableData]
+    [dataInPage.length, table, tableData, deleteEmployee]
   );
 
-  const handleDeleteRows = useCallback(() => {
-    const deleteRows = tableData.filter((row) => !table.selected.includes(row.id));
-    setTableData(deleteRows);
 
-    table.onUpdatePageDeleteRows({
-      totalRows: tableData.length,
-      totalRowsInPage: dataInPage.length,
-      totalRowsFiltered: dataFiltered.length,
-    });
-  }, [dataFiltered.length, dataInPage.length, table, tableData]);
 
   const handleEditRow = useCallback(
-    (id: string) => {
+    (id: number) => {
       router.push(paths.dashboard.employee.edit(id));
     },
     [router]
   );
 
+
   return (
     <>
-      <Container maxWidth={settings.themeStretch ? false : 'xl'}>
-        <Stack direction="row" justifyContent="space-between" textAlign="center" sx={{ mb: 5 }}>
-          <Typography variant="h4">Nhân viên</Typography>
+      <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{
+            mb: { xs: 3, md: 5 },
+          }}
+        >
+          <Typography variant="h4">Danh sách nhân viên</Typography>
           <Button
             component={RouterLink}
             href={paths.dashboard.employee.new}
             variant="contained"
             startIcon={<Iconify icon="mingcute:add-line" />}
           >
-            Thêm nhân viên
+            Nhân viên mới
           </Button>
         </Stack>
-
         <Card>
+
+
+
           <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
-            <TableSelectedAction
-              dense={table.dense}
-              numSelected={table.selected.length}
-              rowCount={tableData.length}
-              onSelectAllRows={(checked) =>
-                table.onSelectAllRows(
-                  checked,
-                  tableData.map((row) => row.id)
-                )
-              }
-              action={
-                <Tooltip title="Delete">
-                  <IconButton color="primary" onClick={confirm.onTrue}>
-                    <Iconify icon="solar:trash-bin-trash-bold" />
-                  </IconButton>
-                </Tooltip>
-              }
-            />
+
 
             <Scrollbar>
               <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
@@ -159,31 +157,35 @@ export default function EmployeeListView() {
                   rowCount={tableData.length}
                   numSelected={table.selected.length}
                   onSort={table.onSort}
-                  onSelectAllRows={(checked) =>
-                    table.onSelectAllRows(
-                      checked,
-                      tableData.map((row) => row.id)
-                    )
-                  }
+
+
                 />
 
                 <TableBody>
-                  {dataFiltered
-                    .slice(
-                      table.page * table.rowsPerPage,
-                      table.page * table.rowsPerPage + table.rowsPerPage
-                    )
-                    .map((row) => (
-                      <EmployeeTableRow
-                        key={row.id}
-                        row={row}
-                        selected={table.selected.includes(row.id)}
-                        onSelectRow={() => table.onSelectRow(row.id)}
-                        onDeleteRow={() => handleDeleteRow(row.id)}
-                        onEditRow={() => handleEditRow(row.id)}
-                      />
-                    ))}
 
+                  {employeesLoading ? (
+                    [...Array(table.rowsPerPage)].map((i, index) => (
+                      <TableSkeleton key={index} sx={{ height: denseHeight }} />
+                    ))
+                  ) : (
+                    <>
+                      {dataFiltered
+                        .slice(
+                          table.page * table.rowsPerPage,
+                          table.page * table.rowsPerPage + table.rowsPerPage
+                        )
+                        .map((row) => (
+                          <EmployeeTableRow
+                            key={row.id}
+                            row={row}
+                            selected={table.selected.includes(row.id as unknown as string)}
+                            onSelectRow={() => table.onSelectRow(row.id as unknown as string)}
+                            onDeleteRow={() => handleDeleteRow(row.id)}
+                            onEditRow={() => handleEditRow(row.id)}
+                          />
+                        ))}
+                    </>
+                  )}
                   <TableEmptyRows
                     height={denseHeight}
                     emptyRows={emptyRows(table.page, table.rowsPerPage, tableData.length)}
@@ -208,28 +210,6 @@ export default function EmployeeListView() {
         </Card>
       </Container>
 
-      <ConfirmDialog
-        open={confirm.value}
-        onClose={confirm.onFalse}
-        title="Delete"
-        content={
-          <>
-            Are you sure want to delete <strong> {table.selected.length} </strong> items?
-          </>
-        }
-        action={
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => {
-              handleDeleteRows();
-              confirm.onFalse();
-            }}
-          >
-            Delete
-          </Button>
-        }
-      />
     </>
   );
 }
@@ -241,11 +221,10 @@ function applyFilter({
   comparator,
   filters,
 }: {
-  inputData: IUserItem[];
+  inputData: IEmployeeItem[];
   comparator: (a: any, b: any) => number;
-  filters: IUserTableFilters;
+  filters: IEmployeeTableFilters;
 }) {
-  const { name, status, role } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -256,20 +235,6 @@ function applyFilter({
   });
 
   inputData = stabilizedThis.map((el) => el[0]);
-
-  if (name) {
-    inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(name.toLowerCase()) !== -1
-    );
-  }
-
-  if (status !== 'all') {
-    inputData = inputData.filter((user) => user.status === status);
-  }
-
-  if (role.length) {
-    inputData = inputData.filter((user) => role.includes(user.role));
-  }
 
   return inputData;
 }

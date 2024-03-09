@@ -1,79 +1,72 @@
 'use client';
 
-import isEqual from 'lodash/isEqual';
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
+import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
-import IconButton from '@mui/material/IconButton';
-import { Stack, Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { _userList } from 'src/_mock';
-
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-import { ConfirmDialog } from 'src/components/custom-dialog';
 import { useSettingsContext } from 'src/components/settings';
 import {
   useTable,
   emptyRows,
   TableNoData,
   getComparator,
+  TableSkeleton,
   TableEmptyRows,
   TableHeadCustom,
-  TableSelectedAction,
   TablePaginationCustom,
 } from 'src/components/table';
-
-import { IUserItem, IUserTableFilters } from 'src/types/user';
-
+import { IPartnerItem, IPartnerTableFilters } from 'src/types/partner';
+import { useDeletePartner, useGetPartners } from 'src/api/partner';
 import CollaboratorTableRow from '../collaborator-table-row';
 
-// ----------------------------------------------------------------------
+
+
+// --------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Nhân viên' },
-  { id: 'createAt', label: 'Ngày tạo' },
-  { id: 'description', label: 'Mô tả' },
+  { id: 'name_vi', label: 'Sản phẩm', width: 300 },
+  { id: 'created_at', label: 'Ngày tạo', width: 180 },
+  { id: 'describe_vi', label: 'Mô tả', width: 180 },
   { id: '', width: 88 },
 ];
 
-const defaultFilters: IUserTableFilters = {
-  name: '',
-  role: [],
-  status: 'all',
-};
 
 // ----------------------------------------------------------------------
 
-export default function CollaboratorListView() {
+export default function StoreListView() {
   const table = useTable();
+
 
   const settings = useSettingsContext();
 
   const router = useRouter();
 
-  const confirm = useBoolean();
+  const [tableData, setTableData] = useState<IPartnerItem[]>([]);
 
-  const [tableData, setTableData] = useState(_userList);
 
-  const [filters] = useState(defaultFilters);
+  const { partners, partnersLoading, partnersEmpty } = useGetPartners();
+
+
+  useEffect(() => {
+    setTableData(partners);
+  }, [partners]);
 
   const dataFiltered = applyFilter({
     inputData: tableData,
     comparator: getComparator(table.order, table.orderBy),
-    filters,
   });
 
   const dataInPage = dataFiltered.slice(
@@ -83,73 +76,64 @@ export default function CollaboratorListView() {
 
   const denseHeight = table.dense ? 52 : 72;
 
-  const canReset = !isEqual(defaultFilters, filters);
+  const notFound = !dataFiltered.length || partnersEmpty;
 
-  const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
+
+  const deletePartner = useDeletePartner();
 
   const handleDeleteRow = useCallback(
-    (id: string) => {
-      const deleteRow = tableData.filter((row) => row.id !== id);
-      setTableData(deleteRow);
+    async (id: number) => {
+      try {
+        console.log(id);
+        deletePartner(id)
+        const updatedTableData = tableData.filter((row) => row.id !== id);
+        setTableData(updatedTableData);
 
-      table.onUpdatePageDeleteRow(dataInPage.length);
+        table.onUpdatePageDeleteRow(dataInPage.length);
+      } catch (error) {
+        console.error('Error deleting user:', error);
+      }
     },
-    [dataInPage.length, table, tableData]
+    [dataInPage.length, table, tableData, deletePartner]
   );
 
-  const handleDeleteRows = useCallback(() => {
-    const deleteRows = tableData.filter((row) => !table.selected.includes(row.id));
-    setTableData(deleteRows);
 
-    table.onUpdatePageDeleteRows({
-      totalRows: tableData.length,
-      totalRowsInPage: dataInPage.length,
-      totalRowsFiltered: dataFiltered.length,
-    });
-  }, [dataFiltered.length, dataInPage.length, table, tableData]);
 
   const handleEditRow = useCallback(
-    (id: string) => {
+    (id: number) => {
       router.push(paths.dashboard.collaborator.edit(id));
     },
     [router]
   );
 
+
   return (
     <>
-      <Container maxWidth={settings.themeStretch ? false : 'xl'}>
-        <Stack direction="row" justifyContent="space-between" textAlign="center" sx={{ mb: 5 }}>
-          <Typography variant="h4">Đối tác</Typography>
+      <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{
+            mb: { xs: 3, md: 5 },
+          }}
+        >
+          <Typography variant="h4">Danh sách đối tác</Typography>
           <Button
             component={RouterLink}
             href={paths.dashboard.collaborator.new}
             variant="contained"
             startIcon={<Iconify icon="mingcute:add-line" />}
           >
-            Thêm đối tác
+            Đối tác mới
           </Button>
         </Stack>
-
         <Card>
+
+
+
           <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
-            <TableSelectedAction
-              dense={table.dense}
-              numSelected={table.selected.length}
-              rowCount={tableData.length}
-              onSelectAllRows={(checked) =>
-                table.onSelectAllRows(
-                  checked,
-                  tableData.map((row) => row.id)
-                )
-              }
-              action={
-                <Tooltip title="Delete">
-                  <IconButton color="primary" onClick={confirm.onTrue}>
-                    <Iconify icon="solar:trash-bin-trash-bold" />
-                  </IconButton>
-                </Tooltip>
-              }
-            />
+
 
             <Scrollbar>
               <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
@@ -160,31 +144,35 @@ export default function CollaboratorListView() {
                   rowCount={tableData.length}
                   numSelected={table.selected.length}
                   onSort={table.onSort}
-                  onSelectAllRows={(checked) =>
-                    table.onSelectAllRows(
-                      checked,
-                      tableData.map((row) => row.id)
-                    )
-                  }
+
+
                 />
 
                 <TableBody>
-                  {dataFiltered
-                    .slice(
-                      table.page * table.rowsPerPage,
-                      table.page * table.rowsPerPage + table.rowsPerPage
-                    )
-                    .map((row) => (
-                      <CollaboratorTableRow
-                        key={row.id}
-                        row={row}
-                        selected={table.selected.includes(row.id)}
-                        onSelectRow={() => table.onSelectRow(row.id)}
-                        onDeleteRow={() => handleDeleteRow(row.id)}
-                        onEditRow={() => handleEditRow(row.id)}
-                      />
-                    ))}
 
+                  {partnersLoading ? (
+                    [...Array(table.rowsPerPage)].map((i, index) => (
+                      <TableSkeleton key={index} sx={{ height: denseHeight }} />
+                    ))
+                  ) : (
+                    <>
+                      {dataFiltered
+                        .slice(
+                          table.page * table.rowsPerPage,
+                          table.page * table.rowsPerPage + table.rowsPerPage
+                        )
+                        .map((row) => (
+                          <CollaboratorTableRow
+                            key={row.id}
+                            row={row}
+                            selected={table.selected.includes(row.id as unknown as string)}
+                            onSelectRow={() => table.onSelectRow(row.id as unknown as string)}
+                            onDeleteRow={() => handleDeleteRow(row.id)}
+                            onEditRow={() => handleEditRow(row.id)}
+                          />
+                        ))}
+                    </>
+                  )}
                   <TableEmptyRows
                     height={denseHeight}
                     emptyRows={emptyRows(table.page, table.rowsPerPage, tableData.length)}
@@ -209,28 +197,6 @@ export default function CollaboratorListView() {
         </Card>
       </Container>
 
-      <ConfirmDialog
-        open={confirm.value}
-        onClose={confirm.onFalse}
-        title="Delete"
-        content={
-          <>
-            Are you sure want to delete <strong> {table.selected.length} </strong> items?
-          </>
-        }
-        action={
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => {
-              handleDeleteRows();
-              confirm.onFalse();
-            }}
-          >
-            Delete
-          </Button>
-        }
-      />
     </>
   );
 }
@@ -240,13 +206,11 @@ export default function CollaboratorListView() {
 function applyFilter({
   inputData,
   comparator,
-  filters,
 }: {
-  inputData: IUserItem[];
+  inputData: IPartnerItem[];
   comparator: (a: any, b: any) => number;
-  filters: IUserTableFilters;
 }) {
-  const { name, status, role } = filters;
+
 
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -257,20 +221,6 @@ function applyFilter({
   });
 
   inputData = stabilizedThis.map((el) => el[0]);
-
-  if (name) {
-    inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(name.toLowerCase()) !== -1
-    );
-  }
-
-  if (status !== 'all') {
-    inputData = inputData.filter((user) => user.status === status);
-  }
-
-  if (role.length) {
-    inputData = inputData.filter((user) => role.includes(user.role));
-  }
 
   return inputData;
 }

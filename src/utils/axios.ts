@@ -25,14 +25,14 @@ export const fetcher = async (args: string | [string, AxiosRequestConfig]) => {
 
   const res = await axiosInstance.get(url, { ...config });
 
-  return res.data.data;
+  return res.data;
 };
 
 // ----------------------------------------------------------------------
 
 export const endpoints = {
   auth: {
-    me: '/api/auth/me',
+    me: '/api/v1/authenticate',
     login: '/api/v1/login',
     register: '/api/auth/register',
   },
@@ -41,16 +41,29 @@ export const endpoints = {
     update: '/api/v1/introduce/update'
   },
   about: {
-    list: 'api/v1/towards-us/list'
+    list: '/api/v1/towards-us/list',
+    update: '/api/v1/towards-us/update'
   },
   employee: {
-    list: 'api/v1/employee/list'
+    list: '/api/v1/employee/list',
+    details: '/api/v1/employee',
+    update: '/api/v1/employee/update',
+    delete: '/api/v1/employee/delete',
+    add: '/api/v1/employee/add'
   },
   item: {
-    list: 'api/v1/item/list'
+    add: '/api/v1/item/add',
+    list: '/api/v1/item/list',
+    details: '/api/v1/item',
+    delete: '/api/v1/item/delete',
+    update: '/api/v1/item/update'
   },
   partner: {
-    list: 'api/v1/partner/list'
+    list: '/api/v1/partner/list',
+    delete: '/api/v1/partner/delete',
+    add: '/api/v1/partner/add',
+    details: '/api/v1/partner',
+    update: '/api/v1/partner/update'
   },
   product: {
     list: '/api/product/list',

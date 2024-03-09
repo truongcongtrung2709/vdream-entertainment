@@ -15,14 +15,14 @@ import Iconify from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-import { IProductItem } from 'src/types/product';
+import { IItem } from 'src/types/item';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   selected: boolean;
   onEditRow: VoidFunction;
-  row: IProductItem;
+  row: IItem;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
 };
@@ -34,7 +34,7 @@ export default function StoreTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { name, coverUrl, createdAt, price } = row;
+  const { name_vi, created_at, image } = row;
 
   const confirm = useBoolean();
 
@@ -43,18 +43,16 @@ export default function StoreTableRow({
   return (
     <>
       <TableRow hover selected={selected}>
-        <TableCell padding="checkbox">
-          <Checkbox checked={selected} onClick={onSelectRow} />
-        </TableCell>
+
 
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar alt={name} src={coverUrl} sx={{ mr: 2 }} />
+          <Avatar alt={name_vi} src={`https://vdreamentertainment.com/${image}`} sx={{ mr: 2 }} />
 
-          <Typography variant="subtitle2">{name}</Typography>
+          <Typography variant="subtitle2">{name_vi}</Typography>
         </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(createdAt)}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{price}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(created_at)}</TableCell>
+
 
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>

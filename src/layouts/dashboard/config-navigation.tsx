@@ -75,6 +75,7 @@ export function useNavData() {
             path: paths.dashboard.collaborator.root,
             icon: ICONS.user,
           },
+
           {
             title: 'Đổi mật khẩu',
             path: paths.dashboard.changePassword.root,

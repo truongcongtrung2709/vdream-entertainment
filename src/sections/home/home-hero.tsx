@@ -26,6 +26,7 @@ export default function HomeHero() {
   const mdUp = useResponsive('up', 'md');
 
   const introduceData = introduces.length > 0 ? introduces[0] : null;
+
   return (
     <Box
       sx={{
@@ -77,7 +78,7 @@ export default function HomeHero() {
                 visibleByDefault
                 disabledEffect
                 alt="marketing market"
-                src={introduceData?.image}
+                src={`https://vdreamentertainment.com/${introduceData?.image as unknown as string}`}
               />
             </Grid>
           )}

@@ -5,15 +5,17 @@ import React, { useState, useCallback } from 'react';
 import Container from '@mui/material/Container';
 import { Tab, Tabs, Typography } from '@mui/material';
 
-import { _userList } from 'src/_mock';
-
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 
-import CollaboratorNewEditViForm from '../collaborator-new-edit-vi-form';
-import CollaboratorNewEditEnForm from '../collaborator-new-edit-en-form';
+import { useGetPartner } from 'src/api/partner';
+import CollaboratorEditViForm from '../collaborator-edit-vi-form';
+import CollaboratorEditEnForm from '../collaborator-edit-en-form';
 
-// ----------------------------------------------------------------------
+type Props = {
+  id: number;
+};
+
 const TABS = [
   {
     value: 'vietnamese',
@@ -26,25 +28,24 @@ const TABS = [
     icon: <Iconify icon="emojione-v1:flag-for-united-kingdom" width={24} />,
   },
 ];
-
-type Props = {
-  id: string;
-};
+// ----------------------------------------------------------------------
 
 export default function CollaboratorEditView({ id }: Props) {
   const settings = useSettingsContext();
 
-  const currentUser = _userList.find((user) => user.id === id);
+  const { partner: currentPartner } = useGetPartner(id);
+
 
   const [currentTab, setCurrentTab] = useState('vietnamese');
 
   const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
     setCurrentTab(newValue);
   }, []);
+
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'xl'}>
+    <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <Typography variant="h4" sx={{ mb: 3 }}>
-        Sửa Đối tác
+        Sửa Đối Tác
       </Typography>
 
       <Tabs
@@ -59,8 +60,9 @@ export default function CollaboratorEditView({ id }: Props) {
         ))}
       </Tabs>
 
-      {currentTab === 'vietnamese' && <CollaboratorNewEditViForm currentUser={currentUser} />}
-      {currentTab === 'english' && <CollaboratorNewEditEnForm currentUser={currentUser} />}
+      {currentTab === 'vietnamese' && <CollaboratorEditViForm currentPartner={currentPartner} />}
+
+      {currentTab === 'english' && <CollaboratorEditEnForm currentPartner={currentPartner} />}
     </Container>
   );
 }
