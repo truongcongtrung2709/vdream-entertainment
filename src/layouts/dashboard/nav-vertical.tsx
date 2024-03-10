@@ -55,6 +55,7 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
       <Logo sx={{ mt: 3, ml: 4, mb: 1 }} />
 
       <NavSectionVertical
+        sx={{ mt: 3 }}
         data={navData}
         slotProps={{
           currentRole: user?.role,

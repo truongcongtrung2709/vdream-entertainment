@@ -51,7 +51,7 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
     () => ({
       first_name: currentEmployee?.first_name || '',
       last_name: currentEmployee?.last_name || '',
-      image: `https://vdreamentertainment.com/${currentEmployee?.image}` || null,
+      image: currentEmployee?.image ? `https://vdreamentertainment.com/${currentEmployee?.image}` : null || '',
     }),
     [currentEmployee]
   );
