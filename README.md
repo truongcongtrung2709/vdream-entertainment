@@ -12,24 +12,17 @@ To get started with this project, follow these steps:
 
 1. Clone the repository to your local machine:
    
-
    `
    git clone https://github.com/truongcongtrung2709/vdream-entertainment.git
    `
 
-
 3. Navigate into the project directory:
    
-
   `cd vdream-entertainment`
-
-
 
 3.Create a .env file in the root of the project based on the provided .env.example. Replace the placeholder values with your actual API keys and other environment variables.
 
-
   .env file:
-
 
     # HOST
     NEXT_PUBLIC_HOST_API=https://vdreamentertainment.com
@@ -38,18 +31,13 @@ To get started with this project, follow these steps:
     NEXT_PUBLIC_ASSETS_API=https://api-dev-minimal-v510.vercel.app
 
 
-
 4. Install dependencies using npm or yarn:
-
 
    `npm run dev`
 
-
-  # or
-
+  or
 
    `yarn dev`
-
 
 5. Open http://localhost:8082 in your browser to view the project.
 
