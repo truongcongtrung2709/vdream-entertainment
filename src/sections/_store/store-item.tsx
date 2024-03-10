@@ -38,7 +38,7 @@ export default function StoreItem({ item }: Props) {
           }
         </Typography>
 
-        <Link component={RouterLink} href={`https://${link_youtube}`} color="inherit">
+        <Link component={RouterLink} href={link_youtube} color="inherit">
           <TextMaxLine variant="h5" line={1}>
             {name_vi}
           </TextMaxLine>
