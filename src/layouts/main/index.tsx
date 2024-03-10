@@ -23,7 +23,7 @@ export default function MainLayout({ children }: Props) {
     arr.some((path) => pathname === path || pathname === `${path}/`);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: 1 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: 1, mt: 10 }}>
       <Header headerOnDark={actionPage(pathsOnDark)} />
 
       <Box
