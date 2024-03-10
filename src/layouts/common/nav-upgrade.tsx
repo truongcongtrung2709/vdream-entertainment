@@ -19,7 +19,6 @@ import { paths } from 'src/routes/paths';
 
 export default function NavUpgrade() {
   const { user } = useAuthContext();
-  console.log(user);
 
   const router = useRouter();
 
