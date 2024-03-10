@@ -9,7 +9,7 @@ import { usePathname } from 'src/routes/hooks';
 import { useResponsive } from 'src/hooks/use-responsive';
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 
-import Logo from 'src/components/logo';
+import Logo from 'src/components/logo-dashboard';
 import Scrollbar from 'src/components/scrollbar';
 import { NavSectionVertical } from 'src/components/nav-section';
 

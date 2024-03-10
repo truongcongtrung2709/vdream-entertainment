@@ -19,8 +19,8 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
     const logo = (
       <Box
         component="img"
-        src="/logo/logo_single.svg"
-        sx={{ width: 133, height: 59, cursor: 'pointer', ...sx }}
+        src="/logo/logo_full.svg"
+        sx={{ width: 133, height: 59, cursor: 'pointer' }}
       />
     );
 
@@ -77,7 +77,7 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
     }
 
     return (
-      <Link component={RouterLink} href="/" sx={{ display: 'contents' }}>
+      <Link component={RouterLink} href="/dashboard" sx={{ display: 'contents' }}>
         {logo}
       </Link>
     );

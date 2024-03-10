@@ -13,6 +13,7 @@ import { useTranslate } from 'src/locales';
 import Iconify from 'src/components/iconify';
 import { _socials } from 'src/_mock/_others';
 import ContactMap from 'src/components/map';
+import { Box } from '@mui/material';
 // ----------------------------------------------------------------------
 
 export default function ContactView() {
@@ -36,7 +37,7 @@ export default function ContactView() {
             {t("Liên hệ")}
           </Typography>
 
-          <Stack spacing={3} alignItems={{ xs: 'center', md: 'flex-start' }}>
+          <Stack spacing={3} justifyContent='center' alignItems={{ xs: 'flex-start' }}>
             <Stack spacing={1}>
               <Stack direction="row" alignItems="center" sx={{ typography: 'subtitle2' }}>
                 <Iconify icon="carbon:email" width={24} sx={{ mr: 1 }} /> Email
@@ -68,7 +69,7 @@ export default function ContactView() {
             <Divider sx={{ borderStyle: 'dashed', width: 1 }} />
 
             <Stack spacing={1} alignItems={{ xs: 'center', md: 'flex-start' }}>
-              <Typography variant="overline">Mạng xã hội</Typography>
+              <Typography variant="overline">{t("Mạng xã hội")}</Typography>
               <Stack direction="row">
                 {_socials.map((social) => (
                   <IconButton href={social.path} key={social.value} color="inherit">
@@ -77,6 +78,7 @@ export default function ContactView() {
                 ))}
               </Stack>
             </Stack>
+
           </Stack>
         </Grid>
 

@@ -16,7 +16,7 @@ import { useResponsive } from 'src/hooks/use-responsive';
 
 import { useTranslate } from 'src/locales';
 
-import Logo from 'src/components/logo';
+import Logo from 'src/components/logo-main';
 import Iconify from 'src/components/iconify';
 
 import { NavSubListProps } from './nav/types';

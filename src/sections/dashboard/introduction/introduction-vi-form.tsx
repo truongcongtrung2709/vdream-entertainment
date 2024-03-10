@@ -75,7 +75,6 @@ export default function IntroductionViForm({ introduceData, refreshIntroduces }:
   useEffect(() => {
 
     if (introduceData) {
-      console.log(introduceData);
 
       reset(defaultValues);
     }

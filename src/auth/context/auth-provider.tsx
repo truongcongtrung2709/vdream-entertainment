@@ -182,6 +182,7 @@ export function AuthProvider({ children }: Props) {
 
   // LOGOUT
   const logout = useCallback(async () => {
+    await axios.post(endpoints.auth.logout);
     setStorage(null);
     dispatch({
       type: Types.LOGOUT,

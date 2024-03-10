@@ -10,7 +10,7 @@ import { useResponsive } from 'src/hooks/use-responsive';
 
 import { bgBlur } from 'src/theme/css';
 
-import Logo from 'src/components/logo';
+import Logo from 'src/components/logo-main';
 
 import NavMobile from './nav/mobile';
 import NavDesktop from './nav/desktop';
@@ -39,14 +39,23 @@ export default function Header({ headerOnDark }: Props) {
       </Box>
 
       {mdUp ? (
-        <Stack flexGrow={1} alignItems="center" sx={{ height: 1 }}>
+
+        <Stack flexGrow={1} alignItems="center" sx={{
+          height: 0.78, ...(offset && {
+            height: {
+              md: 0.95,
+            },
+          }),
+        }}>
           <NavDesktop data={navConfig} />
         </Stack>
+
       ) : (
         <Box sx={{ flexGrow: 1 }} />
       )}
+      <LanguagePopover />
 
-      <LanguagePopover/>
+
 
       {!mdUp && <NavMobile data={navConfig} />}
     </>

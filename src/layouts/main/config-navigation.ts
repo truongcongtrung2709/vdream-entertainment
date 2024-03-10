@@ -5,7 +5,7 @@ import { paths } from 'src/routes/paths';
 export const pageLinks = [
   {
     order: '1',
-    subheader: 'DREAM',
+    subheader: 'V-DREAM',
     cover: '/assets/images/menu/menu_marketing.jpg',
     items: [
       { title: 'Talents', path: '/' },
