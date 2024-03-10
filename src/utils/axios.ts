@@ -35,7 +35,8 @@ export const endpoints = {
     me: '/api/v1/authenticate',
     login: '/api/v1/login',
     register: '/api/auth/register',
-    changePassword: '/api/v1/recovery'
+    changePassword: '/api/v1/recovery',
+    logout: "/api/v1/logout"
   },
   introduce: {
     list: '/api/v1/introduce/list',

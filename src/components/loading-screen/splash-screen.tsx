@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { alpha } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 
-import Logo from '../logo';
+import Logo from '../logo-main';
 
 // ----------------------------------------------------------------------
 

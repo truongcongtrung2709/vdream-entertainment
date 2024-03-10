@@ -30,7 +30,7 @@ export default function NavList({ data }: NavListProps) {
 
   const menuOpen = useBoolean();
 
-  const {t} = useTranslate();
+  const { t } = useTranslate();
 
   const active = useActiveLink(data.path, !!data.children);
 
@@ -134,7 +134,7 @@ function NavSubList({ subheader, isNew, cover, items }: NavSubListProps) {
 
   const commonList = subheader === 'Common';
 
-  const {t} = useTranslate();
+  const { t } = useTranslate();
 
   return (
     <Stack spacing={2}>

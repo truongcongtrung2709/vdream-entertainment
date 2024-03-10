@@ -8,12 +8,14 @@ import { NavSectionVertical } from 'src/components/nav-section';
 
 import NavItem from './nav-item';
 import { NavListProps } from '../types';
+import { useTranslate } from 'src/locales';
+import { fontSize } from '@mui/system';
 
 // ----------------------------------------------------------------------
 
 export default function NavList({ data }: NavListProps) {
   const active = useActiveLink(data.path, !!data.children);
-
+  const { t } = useTranslate();
   const menuOpen = useBoolean();
 
   return (
@@ -21,8 +23,9 @@ export default function NavList({ data }: NavListProps) {
       <NavItem
         open={menuOpen.value}
         onClick={menuOpen.onToggle}
+        sx={{ fontSize: "20px" }}
         //
-        title={data.title}
+        title={t(data.title)}
         path={data.path}
         //
         active={active}
