@@ -143,7 +143,7 @@ export default function StoreEditViForm({ currentItem }: Props) {
 
             <RHFTextField name="price_vi" label="Giá bán" />
 
-            <RHFTextField name="link_youtube" label="Link youtube" />
+            <RHFTextField helperText="Link youtube phải bao gồm https://" name="link_youtube" label="Link youtube" />
 
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Hình ảnh</Typography>
