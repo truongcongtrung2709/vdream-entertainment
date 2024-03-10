@@ -47,7 +47,7 @@ export default function NavUpgrade() {
     >
       <Stack alignItems="center">
         <Box sx={{ position: 'relative' }}>
-          <Avatar src={_mock.image.avatar(1)} alt={user?.first_name} sx={{ width: 48, height: 48 }} />
+          <Avatar src={_mock.image.avatar(24)} alt={user?.first_name} sx={{ width: 48, height: 48 }} />
 
         </Box>
 
