@@ -51,7 +51,7 @@ export default function NavUpgrade() {
 
         <Stack spacing={0.5} sx={{ mt: 1.5, mb: 2 }}>
           <Typography variant="subtitle2" noWrap>
-            {`${user?.last_name}${user?.first_name}`}
+            V Dream
           </Typography>
 
           <Typography variant="body2" noWrap sx={{ color: 'text.disabled' }}>
