@@ -55,7 +55,7 @@ export default function IntroductionViForm({ aboutData, refreshAbouts }: Props) 
       id: aboutData?.id || 1,
       title_vi: aboutData?.title_vi || '',
       describe_vi: aboutData?.describe_vi || '',
-      image: `https://vdreamentertainment.com/${aboutData?.image}` || '',
+      image: aboutData?.image ? `https://vdreamentertainment.com/${aboutData?.image}` : null || '',
       title_en: aboutData?.title_en || '',
       describe_en: aboutData?.describe_en || '',
     }),

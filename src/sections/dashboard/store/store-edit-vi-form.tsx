@@ -48,7 +48,7 @@ export default function StoreEditViForm({ currentItem }: Props) {
   const defaultValues = useMemo(
     () => ({
       name_vi: currentItem?.name_vi || '',
-      image: `https://vdreamentertainment.com/${currentItem?.image}` || '',
+      image: currentItem?.image ? `https://vdreamentertainment.com/${currentItem?.image}` : null || '',
       link_youtube: currentItem?.link_youtube || '',
       price_vi: currentItem?.price_vi || 0,
     }),

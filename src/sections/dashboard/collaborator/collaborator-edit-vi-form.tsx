@@ -47,7 +47,7 @@ export default function CollaboratorEditViForm({ currentPartner }: Props) {
   const defaultValues = useMemo(
     () => ({
       name_vi: currentPartner?.name_vi || '',
-      image: `https://vdreamentertainment.com/${currentPartner?.image}` || '',
+      image: currentPartner?.image ? `https://vdreamentertainment.com/${currentPartner?.image}` : null || '',
       describe_vi: currentPartner?.describe_vi || '',
     }),
     [currentPartner]
