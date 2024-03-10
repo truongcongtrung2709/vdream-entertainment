@@ -53,7 +53,7 @@ export default function NavUpgrade() {
 
         <Stack spacing={0.5} sx={{ mt: 1.5, mb: 2 }}>
           <Typography variant="subtitle2" noWrap>
-            {user ? user?.username : "admin"}
+            {user?.first_name ? user?.first_name : "admin"}
           </Typography>
 
           <Typography variant="body2" noWrap sx={{ color: 'text.disabled' }}>
