@@ -16,11 +16,11 @@ To get started with this project, follow these steps:
    git clone https://github.com/truongcongtrung2709/vdream-entertainment.git
    `
 
-3. Navigate into the project directory:
+2. Navigate into the project directory:
    
   `cd vdream-entertainment`
 
-3.Create a .env file in the root of the project based on the provided .env.example. Replace the placeholder values with your actual API keys and other environment variables.
+3. Create a .env file in the root of the project based on the provided .env.example. Replace the placeholder values with your actual API keys and other environment variables.
 
   .env file:
 
