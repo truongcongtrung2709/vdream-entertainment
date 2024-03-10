@@ -19,6 +19,7 @@ import { paths } from 'src/routes/paths';
 
 export default function NavUpgrade() {
   const { user } = useAuthContext();
+  console.log(user);
 
   const router = useRouter();
 
@@ -52,7 +53,7 @@ export default function NavUpgrade() {
 
         <Stack spacing={0.5} sx={{ mt: 1.5, mb: 2 }}>
           <Typography variant="subtitle2" noWrap>
-            V Dream
+            {user ? user?.username : "admin"}
           </Typography>
 
           <Typography variant="body2" noWrap sx={{ color: 'text.disabled' }}>
