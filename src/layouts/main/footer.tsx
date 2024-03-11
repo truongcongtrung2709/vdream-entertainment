@@ -48,7 +48,7 @@ export default function Footer() {
               <Logo />
 
               <Stack spacing={1} alignItems="flex-start">
-                <Typography variant="h6">V-Dream Entertainment Company Limited</Typography>
+                <Typography variant="h6">{t("Công ty TNHH V-Dream Entertainment")}</Typography>
                 <Link href='tel:+84943210566' variant="body2" sx={{ color: 'text.primary' }}>
                   {`${t("Điện thoại")}: (+84) 943210566`}
                 </Link>
@@ -127,6 +127,7 @@ export default function Footer() {
 
 export function ListDesktop({ list }: { list: NavSubListProps }) {
   const pathname = usePathname();
+  const { t } = useTranslate()
 
   return (
     <Stack spacing={1.5} alignItems="flex-start">
@@ -152,7 +153,7 @@ export function ListDesktop({ list }: { list: NavSubListProps }) {
               }),
             }}
           >
-            {link.title}
+            {t(link.title)}
           </Link>
         );
       })}
@@ -164,7 +165,7 @@ export function ListDesktop({ list }: { list: NavSubListProps }) {
 
 export function ListMobile({ list }: { list: NavSubListProps }) {
   const pathname = usePathname();
-
+  const { t } = useTranslate();
   const listExpand = useBoolean();
 
   return (
@@ -205,7 +206,7 @@ export function ListMobile({ list }: { list: NavSubListProps }) {
                 }),
               }}
             >
-              {link.title}
+              {t(link.title)}
             </Link>
           ))}
         </Stack>
