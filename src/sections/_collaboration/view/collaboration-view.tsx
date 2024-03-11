@@ -36,6 +36,7 @@ export default function CollaborationView() {
           (
             <Box
               sx={{
+                mt: 10,
                 rowGap: 8,
                 columnGap: 10,
                 display: 'grid',

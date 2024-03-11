@@ -167,7 +167,7 @@ export default function CollaboratorEditViForm({ currentPartner }: Props) {
           loading={isSubmitting}
           sx={{ mr: 2 }}
         >
-          {!currentPartner ? 'Tạo nhân viên' : 'Cập nhật'}
+          {!currentPartner ? 'Tạo đối tác' : 'Cập nhật'}
         </LoadingButton>
       </Grid>
     </FormProvider>

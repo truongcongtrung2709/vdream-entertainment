@@ -165,7 +165,7 @@ export default function CollaboratorNewForm() {
           loading={isSubmitting}
           sx={{ mr: 2 }}
         >
-          Tạo Sản phẩm
+          Tạo đối tác
         </LoadingButton>
       </Grid>
     </FormProvider>
