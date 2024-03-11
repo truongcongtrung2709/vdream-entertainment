@@ -1,6 +1,6 @@
 const ROOTS = {
   AUTH: '/auth',
-  DASHBOARD: '/dashboard',
+  DASHBOARD: '/admin',
 };
 
 // ----------------------------------------------------------------------

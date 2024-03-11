@@ -95,7 +95,7 @@ export default function HomeHero() {
             maxWidth: 1280,
             position: 'absolute',
             bottom: { md: '20%', lg: 40 },
-            right: { md: -110 },
+            right: { md: -110, lg: 0 },
             width: { md: `calc(100% - ${offsetLeft}px)`, xl: "50%" },
           }}
         >

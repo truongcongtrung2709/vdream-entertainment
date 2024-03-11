@@ -24,7 +24,6 @@ import { IEmployeeItem } from 'src/types/employee';
 import { addEmployee, updateEmployee } from 'src/api/employee';
 import { mutate } from 'swr';
 import { endpoints } from 'src/utils/axios';
-import { width } from '@mui/system';
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +44,8 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
     first_name: Yup.string().required('Hãy điền tên'),
     last_name: Yup.string().required('Hãy điền họ'),
     image: Yup.mixed<any>().nullable().required('Phải có hình'),
+    link_youtube: Yup.string().required('Bắt buộc phải có link youtube'),
+
   });
 
   const defaultValues = useMemo(
@@ -52,6 +53,7 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
       first_name: currentEmployee?.first_name || '',
       last_name: currentEmployee?.last_name || '',
       image: currentEmployee?.image ? `https://vdreamentertainment.com/${currentEmployee?.image}` : null || '',
+      link_youtube: currentEmployee?.link_youtube || '',
     }),
     [currentEmployee]
   );
@@ -83,7 +85,7 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
       const formData = new FormData();
       formData.append('first_name', data.first_name);
       formData.append('last_name', data.last_name);
-
+      formData.append('link_youtube', data.link_youtube);
       // Append image to formData if imageFile exists or if currentEmployee has an image
       if (imageFile) {
         formData.append('image', imageFile);
@@ -143,7 +145,11 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
 
           <Stack spacing={3} sx={{ p: 3 }}>
             <RHFTextField name="first_name" label="Tên" />
+
             <RHFTextField name="last_name" label="Họ" />
+
+            <RHFTextField helperText="Link youtube phải bao gồm https://" name="link_youtube" label="Link youtube" />
+
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Hình đại diện</Typography>
               <Box sx={{ mb: 5 }}>

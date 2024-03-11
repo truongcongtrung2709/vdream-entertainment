@@ -19,8 +19,13 @@ export default function HomeView() {
       <HomeHero />
 
       <HomeAbout />
+      {employees.length > 0 ?
+        (
+          <HomeTeam members={employees} />
 
-      <HomeTeam members={employees} />
+        ) :
+        <></>
+      }
 
     </MainLayout>
 

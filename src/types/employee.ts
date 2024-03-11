@@ -4,6 +4,7 @@ export type IEmployeeItem = {
   first_name: string;
   image: string;
   created_at: Date;
+  link_youtube: string;
 }
 export type IEmployeeTableFilters = {
   first_name: string;

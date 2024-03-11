@@ -17,6 +17,7 @@ type Props = {
 
 export default function HomeTeam({ members }: Props) {
   const { t } = useTranslate()
+
   return (
     <Container
       sx={{

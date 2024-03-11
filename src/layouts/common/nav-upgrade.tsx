@@ -7,13 +7,10 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
-import { useMockedUser } from 'src/hooks/use-mocked-user';
 
 import { useAuthContext } from 'src/auth/hooks';
 
-import Label from 'src/components/label';
 import { _mock } from 'src/_mock';
-import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -52,7 +49,7 @@ export default function NavUpgrade() {
 
         <Stack spacing={0.5} sx={{ mt: 1.5, mb: 2 }}>
           <Typography variant="subtitle2" noWrap>
-            {user?.first_name ? user?.first_name : "admin"}
+            {user?.first_name || user?.lastname ? `${user?.last_name} ${user?.first_name} ` : "admin"}
           </Typography>
 
           <Typography variant="body2" noWrap sx={{ color: 'text.disabled' }}>

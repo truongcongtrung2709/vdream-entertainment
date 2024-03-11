@@ -140,7 +140,7 @@ export default function StoreNewForm() {
 
             <RHFTextField name="price_en" label="Giá bán USD" />
 
-            <RHFTextField name="link_youtube" label="Link youtube" />
+            <RHFTextField name="link_youtube" helperText="Link youtube phải bao gồm https://" label="Link youtube" />
 
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Hình ảnh</Typography>

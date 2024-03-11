@@ -10,6 +10,7 @@ import Image from 'src/components/image';
 import { varHover, varTranHover } from 'src/components/animate';
 
 import { IEmployeeItem } from 'src/types/employee';
+import Link from 'next/link';
 
 
 // ----------------------------------------------------------------------
@@ -23,7 +24,9 @@ interface TeamMarketingMemberProps extends StackProps {
 }
 
 export default function HomeTeamItem({ member, ...other }: TeamMarketingMemberProps) {
-  const { first_name,last_name,image } = member;
+  const { first_name, last_name, image, link_youtube } = member;
+  console.log(link_youtube);
+
 
   return (
     <Stack {...other}>
@@ -34,13 +37,14 @@ export default function HomeTeamItem({ member, ...other }: TeamMarketingMemberPr
         transition={varTranHover()}
         sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden' }}
       >
-
-        <m.div variants={varHover(1.15)} transition={varTranHover()}>
-          <Image src={`${HOST_API}/${image}`} alt={first_name} ratio="3/4" />
-        </m.div>
+        <Link href={link_youtube} passHref target='_blank'>
+          <m.div style={{ cursor: "pointer" }} variants={varHover(1.15)} transition={varTranHover()}>
+            <Image src={`${HOST_API}/${image}`} alt={first_name} ratio="3/4" />
+          </m.div>
+        </Link>
       </Box>
 
-        <Typography variant="h6" textAlign='center' sx={{my:2}}>{`${last_name} ${first_name} `}</Typography>
+      <Typography variant="h6" textAlign='center' sx={{ my: 2 }}>{`${last_name} ${first_name} `}</Typography>
 
     </Stack>
   );
