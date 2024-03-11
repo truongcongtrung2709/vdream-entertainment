@@ -15,11 +15,14 @@ export default function HomeView() {
 
   return (
     <MainLayout>
+
       <HomeHero />
 
       <HomeAbout />
 
       <HomeTeam members={employees} />
+
     </MainLayout>
+
   );
 }

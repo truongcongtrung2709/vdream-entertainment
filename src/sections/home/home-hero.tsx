@@ -45,9 +45,8 @@ export default function HomeHero() {
           color: alpha(theme.palette.background.default, 0.9),
           imgUrl: '/assets/background/overlay_1.jpg',
         }),
-        overflow: 'hidden',
         position: 'relative',
-        height: { md: `calc(100vh - ${HEADER.H_DESKTOP}px)` },
+        height: "100vh",
       }}
     >
       <Container sx={{ height: 1 }}>

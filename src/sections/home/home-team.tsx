@@ -30,6 +30,7 @@ export default function HomeTeam({ members }: Props) {
         sx={{
           textAlign: { xs: 'center', md: 'left' },
           mb: '40px',
+          scrollSnapAlign: 'center',
         }}
       >
         <Typography component="div" variant="overline" sx={{ color: 'text.disabled' }}>

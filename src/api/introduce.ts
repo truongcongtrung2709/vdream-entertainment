@@ -19,7 +19,7 @@ export function useGetIntroduces() {
       introducesLoading: isLoading,
       introducesError: error,
       introducesValidating: isValidating,
-      introducesEmpty: !isLoading && !data.data,
+      introducesEmpty: !isLoading && !data?.data,
       refreshIntroduces: mutate,
     }),
     [data?.products, error, isLoading, isValidating, mutate]
