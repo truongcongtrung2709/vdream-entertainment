@@ -42,14 +42,19 @@ export default function StoreEditViForm({ currentItem }: Props) {
     name_vi: Yup.string().required('Bắt buộc phải có tên'),
     image: Yup.mixed<any>().nullable().required('Bắt buộc phải có hình'),
     price_vi: Yup.number().required('Bắt buộc phải có giá'),
-    link_youtube: Yup.string().required('Bắt buộc phải có link youtube'),
+    link_youtube: Yup.string()
+      .matches(
+        /^https:\/\/www\.youtube\.com\//,
+        'Link youtube phải bắt đầu bằng https://www.youtube.com/'
+      )
+      .required('Bắt buộc phải có link youtube'),
   });
 
   const defaultValues = useMemo(
     () => ({
       name_vi: currentItem?.name_vi || '',
-      image: currentItem?.image ? `https://vdreamentertainment.com/${currentItem?.image}` : null || '',
-      link_youtube: currentItem?.link_youtube || '',
+      image: currentItem?.image ? `https://vdreamentertainment.com/${currentItem?.image}` : null || null,
+      link_youtube: currentItem?.link_youtube || 'https://www.youtube.com/',
       price_vi: currentItem?.price_vi || 0,
     }),
     [currentItem]
@@ -74,7 +79,6 @@ export default function StoreEditViForm({ currentItem }: Props) {
   }, [currentItem, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log('Submitted Data:', data);
     try {
       const formData = new FormData();
       formData.append('name_vi', data.name_vi);
@@ -90,7 +94,6 @@ export default function StoreEditViForm({ currentItem }: Props) {
 
       // Determine whether to update or add item
       await updateItem(currentItem?.id, formData);
-      console.log('Update item with ID:', currentItem?.id);
 
 
       // Reset form, refresh item list, show success message, and navigate
@@ -143,7 +146,7 @@ export default function StoreEditViForm({ currentItem }: Props) {
 
             <RHFTextField name="price_vi" label="Giá bán" />
 
-            <RHFTextField helperText="Link youtube phải bao gồm https://" name="link_youtube" label="Link youtube" />
+            <RHFTextField helperText="Link youtube phải bao gồm https://www.youtube.com/" name="link_youtube" label="Link youtube" />
 
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Hình ảnh</Typography>

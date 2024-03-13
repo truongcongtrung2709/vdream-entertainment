@@ -6,7 +6,7 @@ const ROOTS = {
 // ----------------------------------------------------------------------
 
 export const paths = {
-  collaboration: '/collaboration',
+  collaboration: '/partners',
   store: '/store',
   contact: '/contact',
   // AUTH
@@ -30,9 +30,9 @@ export const paths = {
       new: `${ROOTS.DASHBOARD}/store/new`,
     },
     collaborator: {
-      root: `${ROOTS.DASHBOARD}/collaborator`,
-      edit: (id: number) => `${ROOTS.DASHBOARD}/collaborator/${id}`,
-      new: `${ROOTS.DASHBOARD}/collaborator/new`,
+      root: `${ROOTS.DASHBOARD}/partner`,
+      edit: (id: number) => `${ROOTS.DASHBOARD}/partner/${id}`,
+      new: `${ROOTS.DASHBOARD}/partner/new`,
     },
     changePassword: {
       root: `${ROOTS.DASHBOARD}/change-password`,

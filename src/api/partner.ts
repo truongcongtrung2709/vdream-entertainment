@@ -52,7 +52,6 @@ export function useGetPartner(partnerId: number) {
 export function useDeletePartner() {
   const deletePartner = async (partnerId: number) => {
     const URL = `${endpoints.partner.delete}/${partnerId}`;
-    console.log(URL);
 
     try {
       await axiosInstance.post(URL);

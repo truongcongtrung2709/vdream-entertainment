@@ -19,7 +19,6 @@ export default function HomeAbout() {
   const langStorage = localStorageGetItem('i18nextLng');
 
   const { abouts } = useGetAbouts();
-
   const aboutsData = abouts.length > 0 ? abouts[0] : null;
 
   return (
@@ -56,14 +55,19 @@ export default function HomeAbout() {
           }
         </Typography>
       </Grid>
-      <Image
-        alt="landing about"
-        src={`https://vdreamentertainment.com/${aboutsData?.image}`}
-        ratio="16/9"
-        sx={{
-          borderRadius: 1.5,
-        }}
-      />
+      {!aboutsData?.image ?
+        <></> :
+        (
+          <Image
+            alt="landing about"
+            src={`https://vdreamentertainment.com/${aboutsData?.image}`}
+            ratio="16/9"
+            sx={{
+              borderRadius: 1.5,
+            }}
+          />
+        )}
+
     </Container>
   );
 }

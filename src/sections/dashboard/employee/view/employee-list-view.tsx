@@ -97,7 +97,6 @@ export default function EmployeeListView() {
   const handleDeleteRow = useCallback(
     async (id: number) => {
       try {
-        console.log(id);
         deleteEmployee(id)
         const updatedTableData = tableData.filter((row) => row.id !== id);
         setTableData(updatedTableData);

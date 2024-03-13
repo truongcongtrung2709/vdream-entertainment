@@ -49,7 +49,7 @@ export default function CollaboratorNewForm() {
   const defaultValues = {
     name_vi: '',
     name_en: '',
-    image: '',
+    image: null,
     describe_vi: '',
     describe_en: '',
   };
@@ -68,7 +68,6 @@ export default function CollaboratorNewForm() {
 
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log('Submitted Data:', data);
     try {
       const formData = new FormData();
       formData.append('name_vi', data.name_vi);

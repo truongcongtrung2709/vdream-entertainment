@@ -47,7 +47,7 @@ export default function CollaboratorEditViForm({ currentPartner }: Props) {
   const defaultValues = useMemo(
     () => ({
       name_vi: currentPartner?.name_vi || '',
-      image: currentPartner?.image ? `https://vdreamentertainment.com/${currentPartner?.image}` : null || '',
+      image: currentPartner?.image ? `https://vdreamentertainment.com/${currentPartner?.image}` : null || null,
       describe_vi: currentPartner?.describe_vi || '',
     }),
     [currentPartner]
@@ -72,7 +72,6 @@ export default function CollaboratorEditViForm({ currentPartner }: Props) {
   }, [currentPartner, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log('Submitted Data:', data);
     try {
       const formData = new FormData();
       formData.append('name_vi', data.name_vi);
@@ -87,7 +86,6 @@ export default function CollaboratorEditViForm({ currentPartner }: Props) {
 
       // Determine whether to update or add item
       await updatePartner(currentPartner?.id, formData);
-      console.log('Update item with ID:', currentPartner?.id);
 
 
       // Reset form, refresh item list, show success message, and navigate

@@ -10,4 +10,4 @@ export const GOOGLE_MAP_API = "AIzaSyC9h30zxhA7VFWWyg4UNNxv7BG1oCHlJyg";
 
 
 // ROOT PATH AFTER LOGIN SUCCESSFUL
-export const PATH_AFTER_LOGIN = paths.dashboard.root; // as '/dashboard'
+export const PATH_AFTER_LOGIN = paths.dashboard.root; // as '/admin'

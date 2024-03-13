@@ -52,7 +52,6 @@ export function useGetItem(itemId: number) {
 export function useDeleteItem() {
   const deleteItem = async (ItemId: number) => {
     const URL = `${endpoints.item.delete}/${ItemId}`;
-    console.log(URL);
 
     try {
       await axiosInstance.post(URL);

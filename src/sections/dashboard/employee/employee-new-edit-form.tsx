@@ -44,7 +44,12 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
     first_name: Yup.string().required('Hãy điền tên'),
     last_name: Yup.string().required('Hãy điền họ'),
     image: Yup.mixed<any>().nullable().required('Phải có hình'),
-    link_youtube: Yup.string().required('Bắt buộc phải có link youtube'),
+    link_youtube: Yup.string()
+      .matches(
+        /^https:\/\/www\.youtube\.com\//,
+        'Link youtube phải bắt đầu bằng https://www.youtube.com/'
+      )
+      .required('Bắt buộc phải có link youtube'),
 
   });
 
@@ -52,8 +57,8 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
     () => ({
       first_name: currentEmployee?.first_name || '',
       last_name: currentEmployee?.last_name || '',
-      image: currentEmployee?.image ? `https://vdreamentertainment.com/${currentEmployee?.image}` : null || '',
-      link_youtube: currentEmployee?.link_youtube || '',
+      image: currentEmployee?.image ? `https://vdreamentertainment.com/${currentEmployee?.image}` : null || null,
+      link_youtube: currentEmployee?.link_youtube || 'https://www.youtube.com/',
     }),
     [currentEmployee]
   );
@@ -73,14 +78,12 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
   useEffect(() => {
 
     if (currentEmployee) {
-      console.log(currentEmployee);
 
       reset(defaultValues);
     }
   }, [currentEmployee, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log('Submitted Data:', data);
     try {
       const formData = new FormData();
       formData.append('first_name', data.first_name);
@@ -96,9 +99,7 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
       // Determine whether to update or add employee
       if (currentEmployee) {
         await updateEmployee(currentEmployee.id, formData);
-        console.log('Update employee with ID:', currentEmployee.id);
       } else {
-        console.log('Creating new user:', data);
         await addEmployee(formData);
       }
 
@@ -148,7 +149,7 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
 
             <RHFTextField name="last_name" label="Họ" />
 
-            <RHFTextField helperText="Link youtube phải bao gồm https://" name="link_youtube" label="Link youtube" />
+            <RHFTextField helperText="Link youtube phải bao gồm https://www.youtube.com/" name="link_youtube" label="Link youtube" />
 
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Hình đại diện</Typography>

@@ -70,7 +70,6 @@ export default function CollaboratorEditEnForm({ currentPartner }: Props) {
   }, [currentPartner, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log('Submitted Data:', data);
     try {
       const formData = new FormData();
       formData.append('name_en', data.name_en);
@@ -79,7 +78,6 @@ export default function CollaboratorEditEnForm({ currentPartner }: Props) {
 
       // Determine whether to update or add item
       await updatePartner(currentPartner?.id, formData);
-      console.log('Update item with ID:', currentPartner?.id);
 
 
       // Reset form, refresh item list, show success message, and navigate

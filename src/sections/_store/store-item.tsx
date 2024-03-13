@@ -25,10 +25,18 @@ export default function StoreItem({ item }: Props) {
   const langStorage = localStorageGetItem('i18nextLng');
   const { name_en, name_vi, image, price_vi, price_en, link_youtube } = item;
 
+  // Function to truncate text if it exceeds a certain length
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length > maxLength) {
+      return `${text.substring(0, maxLength)}...`;
+    }
+    return text;
+  };
+
   return (
     <div>
       <Link href={link_youtube} passHref target='_blank'>
-        <Image src={`https://vdreamentertainment.com/${image}`} alt={name_en} ratio="1/1" sx={{ borderRadius: 2 }} />
+        <Image src={`https://vdreamentertainment.com/${image}`} alt={name_en} ratio='1/1' sx={{ borderRadius: 2 }} />
       </Link>
       <Stack spacing={1} sx={{ pt: 2.5, px: 2.5 }}>
         <Typography variant="overline" sx={{ color: 'text.disabled' }}>
@@ -41,7 +49,8 @@ export default function StoreItem({ item }: Props) {
 
         <Typography color="inherit">
           <TextMaxLine variant="h5" line={1}>
-            {name_vi}
+            {/* Truncate the name_vi if it exceeds 30 characters */}
+            {langStorage === "vi" ? truncateText(name_vi, 20) : truncateText(name_en, 20)}
           </TextMaxLine>
         </Typography>
       </Stack>

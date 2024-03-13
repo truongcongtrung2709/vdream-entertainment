@@ -5,6 +5,7 @@ import Link from '@mui/material/Link';
 import Box, { BoxProps } from '@mui/material/Box';
 
 import { RouterLink } from 'src/routes/components';
+import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +31,7 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
     }
 
     return (
-      <Link component={RouterLink} href="/dashboard" sx={{ display: 'contents' }}>
+      <Link component={RouterLink} href={paths.dashboard.root} sx={{ display: 'contents' }}>
         {logo}
       </Link>
     );

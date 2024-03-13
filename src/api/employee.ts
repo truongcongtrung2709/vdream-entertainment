@@ -90,7 +90,6 @@ export function updateEmployee(id: number | string, formData: FormData) {
 export function useDeleteEmployee() {
   const deleteEmployee = async (employeeId: number) => {
     const URL = `${endpoints.employee.delete}/${employeeId}`;
-    console.log(URL);
 
     try {
       await axiosInstance.post(URL);

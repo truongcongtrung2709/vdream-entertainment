@@ -84,7 +84,6 @@ export default function StoreListView() {
   const handleDeleteRow = useCallback(
     async (id: number) => {
       try {
-        console.log(id);
         deletePartner(id)
         const updatedTableData = tableData.filter((row) => row.id !== id);
         setTableData(updatedTableData);

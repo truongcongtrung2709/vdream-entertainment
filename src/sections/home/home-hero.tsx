@@ -45,8 +45,9 @@ export default function HomeHero() {
           color: alpha(theme.palette.background.default, 0.9),
           imgUrl: '/assets/background/overlay_1.jpg',
         }),
+        overflow: 'hidden',
         position: 'relative',
-        height: "100vh",
+        height: { md: `calc(100vh - ${HEADER.H_DESKTOP}px)` },
       }}
     >
       <Container sx={{ height: 1 }}>
@@ -88,25 +89,26 @@ export default function HomeHero() {
           </Grid>
         </Grid>
       </Container>
-
-      {mdUp && (
-        <Box
-          sx={{
-            maxWidth: 1280,
-            position: 'absolute',
-            bottom: { md: '20%', lg: 40 },
-            right: { md: -110, lg: 0 },
-            width: { md: `calc(100% - ${offsetLeft}px)`, xl: "50%" },
-          }}
-        >
-          <Image
-            visibleByDefault
-            disabledEffect
-            alt="home hero"
-            src={`https://vdreamentertainment.com/${introduceData?.image}`}
-          />
-        </Box>
-      )}
+      {!introduceData?.image && mdUp ?
+        <></> : (
+          <Box
+            sx={{
+              maxWidth: 1280,
+              position: 'absolute',
+              bottom: { md: '20%', lg: 40 },
+              right: { md: -110, xl: 0 },
+              width: { md: `calc(100% - ${offsetLeft}px)` },
+            }}
+          >
+            <Image
+              visibleByDefault
+              disabledEffect
+              alt="home hero"
+              src={`https://vdreamentertainment.com/${introduceData?.image}`}
+            />
+          </Box>
+        )
+      }
     </Box>
   );
 }

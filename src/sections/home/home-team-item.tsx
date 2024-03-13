@@ -25,7 +25,6 @@ interface TeamMarketingMemberProps extends StackProps {
 
 export default function HomeTeamItem({ member, ...other }: TeamMarketingMemberProps) {
   const { first_name, last_name, image, link_youtube } = member;
-  console.log(link_youtube);
 
 
   return (

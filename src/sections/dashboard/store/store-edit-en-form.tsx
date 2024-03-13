@@ -71,7 +71,6 @@ export default function StoreEditEnForm({ currentItem }: Props) {
   }, [currentItem, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log('Submitted Data:', data);
     try {
       const formData = new FormData();
       formData.append('name_en', data.name_en);
@@ -81,7 +80,6 @@ export default function StoreEditEnForm({ currentItem }: Props) {
 
       // Determine whether to update or add item
       await updateItem(currentItem?.id, formData);
-      console.log('Update item with ID:', currentItem?.id);
 
 
       // Reset form, refresh item list, show success message, and navigate

@@ -51,12 +51,12 @@ export function useNavData() {
       {
         items: [
           {
-            title: 'Talents_Giới thiệu',
+            title: 'Giới thiệu',
             path: paths.dashboard.root,
             icon: ICONS.blog,
           },
           {
-            title: 'Talents_Về chúng tôi',
+            title: 'Về chúng tôi',
             path: paths.dashboard.about.root,
             icon: ICONS.blog,
           },

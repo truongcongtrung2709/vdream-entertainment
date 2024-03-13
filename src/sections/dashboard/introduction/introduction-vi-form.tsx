@@ -55,7 +55,7 @@ export default function IntroductionViForm({ introduceData, refreshIntroduces }:
       id: introduceData?.id || 1,
       title_vi: introduceData?.title_vi || '',
       describe_vi: introduceData?.describe_vi || '',
-      image: introduceData?.image ? `https://vdreamentertainment.com/${introduceData?.image}` : null || '',
+      image: introduceData?.image ? `https://vdreamentertainment.com/${introduceData?.image}` : null || null,
     }),
     [introduceData]
   );
