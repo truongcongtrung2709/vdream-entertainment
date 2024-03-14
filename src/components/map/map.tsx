@@ -34,7 +34,6 @@ export default function Map({ office, sx, ...other }: Props) {
     },
     [centerMap]
   );
-
   return (
     <Box sx={{ height: 480, overflow: 'hidden', ...sx }} {...other}>
       <GoogleMapReact
