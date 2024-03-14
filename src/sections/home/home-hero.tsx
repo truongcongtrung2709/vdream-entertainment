@@ -12,10 +12,7 @@ import { bgGradient } from 'src/theme/css';
 import { useGetIntroduces } from 'src/api/introduce';
 
 import Image from 'src/components/image';
-import { HEADER } from 'src/layouts/config-layout';
-import { Button, Stack } from '@mui/material';
-import Iconify from 'src/components/iconify';
-import { paths } from 'src/routes/paths';
+import { Stack } from '@mui/material';
 import { useRef } from 'react';
 import { useBoundingClientRect } from 'src/hooks/use-bounding-client-rect';
 
@@ -30,13 +27,8 @@ export default function HomeHero() {
 
   const mdUp = useResponsive('up', 'md');
 
+
   const introduceData = introduces.length > 0 ? introduces[0] : null;
-
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const container = useBoundingClientRect(containerRef);
-
-  const offsetLeft = container?.left;
 
   return (
     <Box
@@ -45,70 +37,55 @@ export default function HomeHero() {
           color: alpha(theme.palette.background.default, 0.9),
           imgUrl: '/assets/background/overlay_1.jpg',
         }),
-        overflow: 'hidden',
-        position: 'relative',
-        height: { md: `calc(100vh - ${HEADER.H_DESKTOP}px)` },
       }}
     >
-      <Container sx={{ height: 1 }}>
-        <Grid container columnSpacing={3} alignItems="center" sx={{ height: 1 }}>
-          <Grid xs={12} md={5}>
-            <Stack
-              spacing={5}
-              justifyContent="center"
-              alignItems={{ xs: 'center', md: 'flex-start' }}
-              sx={{
-                py: 15,
-                textAlign: { xs: 'center', md: 'left' },
-              }}
-            >
-              <Typography variant="h1">
-                {langStorage === "vi" ?
-                  introduceData?.title_vi
-                  :
-                  introduceData?.title_en
-                }
-              </Typography>
-
-              <Typography sx={{ color: 'text.secondary' }}>
-                {langStorage === "vi" ?
-                  introduceData?.describe_vi
-                  :
-                  introduceData?.describe_en
-                }
-              </Typography>
-
-
-
-
-            </Stack>
-          </Grid>
-
-          <Grid xs={12} md={7}>
-            <Box ref={containerRef} />
-          </Grid>
-        </Grid>
-      </Container>
-      {!introduceData?.image && mdUp ?
-        <></> : (
-          <Box
+      <Container
+        sx={{
+          py: 15,
+          display: { md: 'flex' },
+          alignItems: { md: 'center' },
+          height: { md: `100vh` },
+        }}
+      >
+        <Grid container columnSpacing={{ xs: 0, md: 10 }}>
+          <Grid
+            xs={12}
+            md={6}
+            lg={5}
             sx={{
-              maxWidth: 1280,
-              position: 'absolute',
-              bottom: { md: '20%', lg: 40 },
-              right: { md: -110, xl: 0 },
-              width: { md: `calc(100% - ${offsetLeft}px)` },
+              textAlign: { xs: 'center', md: 'left' },
             }}
           >
-            <Image
-              visibleByDefault
-              disabledEffect
-              alt="home hero"
-              src={`https://vdreamentertainment.com/${introduceData?.image}`}
-            />
-          </Box>
-        )
-      }
+
+            <Typography variant="h1" sx={{ my: 3 }}>
+              {langStorage === "vi" ?
+                introduceData?.title_vi
+                :
+                introduceData?.title_en
+              }
+            </Typography>
+
+            <Typography sx={{ color: 'text.secondary' }}>
+              {langStorage === "vi" ?
+                introduceData?.describe_vi
+                :
+                introduceData?.describe_en
+              }
+            </Typography>
+          </Grid>
+
+          {mdUp && (
+            <Grid xs={12} md={6} lg={7}>
+              <Image
+                visibleByDefault
+                disabledEffect
+                alt="marketing market"
+                src={`https://vdreamentertainment.com/${introduceData?.image}`}
+              />
+            </Grid>
+          )}
+        </Grid>
+      </Container>
     </Box>
   );
 }
