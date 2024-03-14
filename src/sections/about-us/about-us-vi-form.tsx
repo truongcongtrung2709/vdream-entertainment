@@ -17,7 +17,7 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField, RHFEditor } from 'src/components/hook-form';
 
 import { HOST_API } from 'src/config-global';
 import { fetcher } from 'src/utils/axios';
@@ -143,7 +143,10 @@ export default function IntroductionViForm({ aboutData, refreshAbouts }: Props) 
           <Stack spacing={3} sx={{ p: 3 }}>
             <RHFTextField name="title_vi" label="Tiêu đề" />
 
-            <RHFTextField name="describe_vi" label="Mô tả" multiline rows={3} />
+            <Stack spacing={1.5}>
+              <Typography variant="subtitle2">Mô tả</Typography>
+              <RHFEditor simple name="describe_vi" />
+            </Stack>
 
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Hình ảnh</Typography>

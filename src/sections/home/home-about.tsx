@@ -8,6 +8,7 @@ import { useTranslate } from 'src/locales';
 
 import Image from 'src/components/image';
 import { useGetAbouts } from 'src/api/about';
+import HomeDetailsDescription from './home-details-description';
 
 // ----------------------------------------------------------------------
 
@@ -49,9 +50,9 @@ export default function HomeAbout() {
 
         <Typography sx={{ color: 'text.secondary' }}>
           {langStorage === "vi" ?
-            aboutsData?.describe_vi
+            <HomeDetailsDescription description={aboutsData?.describe_vi} />
             :
-            aboutsData?.describe_en
+            <HomeDetailsDescription description={aboutsData?.describe_en} />
           }
         </Typography>
       </Grid>

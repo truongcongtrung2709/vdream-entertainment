@@ -17,7 +17,7 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField, RHFEditor } from 'src/components/hook-form';
 
 import { IIntroduceItem } from 'src/types/introduce';
 import { updateIntroduce } from 'src/api/introduce';
@@ -113,7 +113,10 @@ export default function IntroductionEnForm({ introduceData, refreshIntroduces }:
           <Stack spacing={3} sx={{ p: 3 }}>
             <RHFTextField name="title_en" label="Tiêu đề" />
 
-            <RHFTextField name="describe_en" label="Mô tả" multiline rows={3} />
+            <Stack spacing={1.5}>
+              <Typography variant="subtitle2">Mô tả</Typography>
+              <RHFEditor simple name="describe_en" />
+            </Stack>
 
           </Stack>
         </Card>
