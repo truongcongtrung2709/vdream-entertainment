@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import { useTranslate } from 'src/locales';
 
 import Iconify from 'src/components/iconify';
-import { _socials } from 'src/_mock/_others';
+import { _office, _socials } from 'src/_mock/_others';
 import ContactMap from 'src/components/map';
 import { Box } from '@mui/material';
 // ----------------------------------------------------------------------
@@ -83,7 +83,7 @@ export default function ContactView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={7}>
-          <ContactMap />
+          <ContactMap office={_office} />
         </Grid>
       </Grid>
     </Container>

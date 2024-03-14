@@ -1,51 +1,65 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 
-import Box from '@mui/material/Box';
+import Box, { BoxProps } from '@mui/material/Box';
 
 import { GOOGLE_MAP_API } from 'src/config-global';
 
 import { mapStyle } from './styles';
 import MapMarker from './map-marker';
+import { MapOfficeProps } from './types';
+import MapPopup from './map-popup';
 
-interface Tooltip {
-  lat: number;
-  lng: number;
+interface Props extends BoxProps {
+  office: MapOfficeProps;
 }
 
-export default function Map() {
-  const [tooltip, setTooltip] = useState<Tooltip | null>(null);
+export default function Map({ office, sx, ...other }: Props) {
+  const [tooltip, setTooltip] = useState<MapOfficeProps | any>(null);
 
-  const centerMap = {
-    lat: 21.0515881,
-    lng: 105.8420549,
-  };
+  const [centerMap, setCenterMap] = useState({
+    lat: office.latlng[0],
+    lng: office.latlng[1],
+  });
 
-  const handleOpen = (lat: number, lng: number) => {
-    setTooltip({ lat, lng });
-  };
+
+  const handleOpen = useCallback(
+    (lat: number, lng: number, office: MapOfficeProps) => {
+      setCenterMap({
+        ...centerMap,
+        lat: lat - 32,
+        lng,
+      });
+      setTooltip(office);
+    },
+    [centerMap]
+  );
 
   return (
-    <Box sx={{ height: 480, overflow: 'hidden', borderRadius: 2 }}>
+    <Box sx={{ height: 480, overflow: 'hidden', ...sx }} {...other}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: GOOGLE_MAP_API }}
-        defaultCenter={centerMap}
-        defaultZoom={15}
+        bootstrapURLKeys={{ key: GOOGLE_MAP_API as string }}
+        center={centerMap}
+        zoom={2}
         options={{
           styles: mapStyle,
           disableDefaultUI: true,
         }}
       >
+
         <MapMarker
-          lat={centerMap.lat}
-          lng={centerMap.lng}
-          onOpen={() => handleOpen(centerMap.lat, centerMap.lng)}
+          lat={office.latlng[0]}
+          lng={office.latlng[1]}
+          onOpen={() => handleOpen(office.latlng[0], office.latlng[1], office)}
         />
 
         {tooltip && (
-          <Box sx={{ position: 'absolute', top: `${tooltip.lat}px`, left: `${tooltip.lng}px`, bgcolor: 'background.paper', p: 1, borderRadius: 2 }}>
-            {`Latitude: ${tooltip.lat.toFixed(6)}, Longitude: ${tooltip.lng.toFixed(6)}`}
-          </Box>
+          <MapPopup
+            lat={tooltip.latlng[0]}
+            lng={tooltip.latlng[1]}
+            office={tooltip}
+            onClose={() => setTooltip(null)}
+          />
         )}
       </GoogleMapReact>
     </Box>

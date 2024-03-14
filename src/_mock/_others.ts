@@ -1,3 +1,4 @@
+import { _mock } from "./_mock";
 
 export const _socials = [
   {
@@ -30,3 +31,11 @@ export const _socials = [
   },
 ];
 
+export const _office = {
+  country: "Việt Nam",
+  address: "16C/65/32 An Dương, Yên Phụ, Tây Hồ, Hà Nội",
+  phoneNumber: "(+84) 943210566",
+  email: "contact@vdreamentertainment.com",
+  photo: _mock.image.travel(4),
+  latlng: [21.0515881, 105.8420549],
+};
