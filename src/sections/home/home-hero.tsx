@@ -36,6 +36,7 @@ export default function HomeHero() {
   }
   const isTitleTooLong = langStorage === 'vi' ? (introduceData?.title_vi.length > 50) : (introduceData?.title_en.length > 50);
   const isDescriptionTooLong = langStorage === 'vi' ? (introduceData?.describe_vi.length > 500) : (introduceData?.describe_en.length > 500);
+  const displayImage = isTitleTooLong || isDescriptionTooLong;
 
   return (
     <Box
@@ -54,7 +55,7 @@ export default function HomeHero() {
         }}
       >
         <Grid container columnSpacing={{ xs: 0, md: 10 }}>
-          {(isTitleTooLong || isDescriptionTooLong) && (
+          {displayImage && (
             <Grid xs={12}>
               <Image
                 visibleByDefault
@@ -64,60 +65,24 @@ export default function HomeHero() {
               />
             </Grid>
           )}
-          {(isTitleTooLong || isDescriptionTooLong) && (
-            <Grid
-              xs={12}
-              sx={{
-                textAlign: { xs: 'center', md: 'left' },
-              }}
-            >
+          <Grid
+            xs={12}
+            md={displayImage ? 12 : 6}
+            lg={displayImage ? 12 : 5}
 
-              <Typography variant="h1" sx={{ my: 3 }}>
-                {langStorage === "vi" ?
-                  introduceData?.title_vi
-                  :
-                  introduceData?.title_en
-                }
-              </Typography>
-
-              <Typography sx={{ color: 'text.secondary' }}>
-                {langStorage === "vi" ?
-                  <HomeDetailsDescription description={introduceData?.describe_vi} />
-                  :
-                  <HomeDetailsDescription description={introduceData?.describe_en} />
-                }
-              </Typography>
-            </Grid>
-          )}
-          {(!isTitleTooLong || !isDescriptionTooLong) && (
-            <Grid
-              xs={12}
-              md={6}
-              lg={5}
-              sx={{
-                textAlign: { xs: 'center', md: 'left' },
-              }}
-            >
-
-              <Typography variant="h1" sx={{ my: 3 }}>
-                {langStorage === "vi" ?
-                  introduceData?.title_vi
-                  :
-                  introduceData?.title_en
-                }
-              </Typography>
-
-              <Typography sx={{ color: 'text.secondary' }}>
-                {langStorage === "vi" ?
-                  <HomeDetailsDescription description={introduceData?.describe_vi} />
-                  :
-                  <HomeDetailsDescription description={introduceData?.describe_en} />
-                }
-              </Typography>
-            </Grid>
-          )}
-
-          {mdUp && (!isTitleTooLong || !isDescriptionTooLong) && (
+          >
+            <Typography variant="h1" sx={{ my: 3, textAlign: displayImage ? "center" : "left" }}>
+              {langStorage === 'vi' ? introduceData?.title_vi : introduceData?.title_en}
+            </Typography>
+            <Typography sx={{ color: 'text.secondary' }}>
+              {langStorage === 'vi' ? (
+                <HomeDetailsDescription description={introduceData?.describe_vi} />
+              ) : (
+                <HomeDetailsDescription description={introduceData?.describe_en} />
+              )}
+            </Typography>
+          </Grid>
+          {mdUp && !displayImage && (
             <Grid xs={12} md={6} lg={7}>
               <Image
                 visibleByDefault
