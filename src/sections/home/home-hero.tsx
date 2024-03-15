@@ -58,6 +58,7 @@ export default function HomeHero() {
           {displayImage && (
             <Grid xs={12}>
               <Image
+                width="100%"
                 visibleByDefault
                 disabledEffect
                 alt="marketing market"
