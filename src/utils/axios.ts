@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
   baseURL: HOST_API,
   headers: {
     'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   }
 });
 
