@@ -25,7 +25,7 @@ To get started with this project, follow these steps:
   .env file:
 
     # HOST
-    NEXT_PUBLIC_HOST_API=https://vdreamentertainment.com
+    NEXT_PUBLIC_HOST_API=https://vdreamentertainment-api.site
     
     # ASSETS
     NEXT_PUBLIC_ASSETS_API=https://api-dev-minimal-v510.vercel.app

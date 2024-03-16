@@ -11,6 +11,7 @@ import { useGetPartners } from 'src/api/partner';
 
 import Image from 'src/components/image';
 import NoDataView from 'src/components/no-data-list/no-data-view';
+import { HOST_API } from 'src/config-global';
 
 
 // ----------------------------------------------------------------------
@@ -56,7 +57,7 @@ export default function CollaborationView() {
                     disabledEffect
                     borderRadius={10}
                     alt={item.name_en}
-                    src={`https://vdreamentertainment.com/${item.image}`}
+                    src={`${HOST_API}/${item.image}`}
                   />
 
                   <Typography variant="h5" sx={{ mt: 5, mb: 2 }}>

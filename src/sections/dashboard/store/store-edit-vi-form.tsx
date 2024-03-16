@@ -22,6 +22,7 @@ import { IItem } from 'src/types/item';
 import { addItem, updateItem } from 'src/api/item';
 import { mutate } from 'swr';
 import { endpoints } from 'src/utils/axios';
+import { HOST_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -53,7 +54,7 @@ export default function StoreEditViForm({ currentItem }: Props) {
   const defaultValues = useMemo(
     () => ({
       name_vi: currentItem?.name_vi || '',
-      image: currentItem?.image ? `https://vdreamentertainment.com/${currentItem?.image}` : null || null,
+      image: currentItem?.image ? `${HOST_API}/${currentItem?.image}` : null || null,
       link_youtube: currentItem?.link_youtube || 'https://www.youtube.com/',
       price_vi: currentItem?.price_vi || 0,
     }),

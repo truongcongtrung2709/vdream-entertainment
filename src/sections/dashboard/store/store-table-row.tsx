@@ -16,6 +16,7 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 import { IItem } from 'src/types/item';
+import { HOST_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -46,7 +47,7 @@ export default function StoreTableRow({
 
 
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar alt={name_vi} src={`https://vdreamentertainment.com/${image}`} sx={{ mr: 2 }} />
+          <Avatar alt={name_vi} src={`${HOST_API}/${image}`} sx={{ mr: 2 }} />
 
           <Typography variant="subtitle2">{name_vi}</Typography>
         </TableCell>

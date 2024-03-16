@@ -24,6 +24,7 @@ import { IEmployeeItem } from 'src/types/employee';
 import { addEmployee, updateEmployee } from 'src/api/employee';
 import { mutate } from 'swr';
 import { endpoints } from 'src/utils/axios';
+import { HOST_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -57,7 +58,7 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
     () => ({
       first_name: currentEmployee?.first_name || '',
       last_name: currentEmployee?.last_name || '',
-      image: currentEmployee?.image ? `https://vdreamentertainment.com/${currentEmployee?.image}` : null || null,
+      image: currentEmployee?.image ? `${HOST_API}/${currentEmployee?.image}` : null || null,
       link_youtube: currentEmployee?.link_youtube || 'https://www.youtube.com/',
     }),
     [currentEmployee]

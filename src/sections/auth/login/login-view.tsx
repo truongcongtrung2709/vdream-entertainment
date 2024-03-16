@@ -62,12 +62,17 @@ export default function LoginView() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       await login?.(data.username, data.password);
-
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
       reset();
-      setErrorMsg(typeof error === 'string' ? error : "Tên Đăng nhập hoặc mật khẩu không đúng");
+      if (error.response && error.response.status === 401) {
+        // If status code is 401 (Unauthorized), indicating username or password is incorrect
+        setErrorMsg("Tên Đăng nhập hoặc mật khẩu không đúng");
+      } else {
+        // For other errors, display the error message from the server or a generic message
+        setErrorMsg("Đã xảy ra lỗi. Vui lòng thử lại sau.");
+      }
     }
   });
 

@@ -22,6 +22,7 @@ import { mutate } from 'swr';
 import { endpoints } from 'src/utils/axios';
 import { IPartnerItem } from 'src/types/partner';
 import { updatePartner } from 'src/api/partner';
+import { HOST_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +48,7 @@ export default function CollaboratorEditViForm({ currentPartner }: Props) {
   const defaultValues = useMemo(
     () => ({
       name_vi: currentPartner?.name_vi || '',
-      image: currentPartner?.image ? `https://vdreamentertainment.com/${currentPartner?.image}` : null || null,
+      image: currentPartner?.image ? `${HOST_API}/${currentPartner?.image}` : null || null,
       describe_vi: currentPartner?.describe_vi || '',
     }),
     [currentPartner]

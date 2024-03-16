@@ -4,7 +4,13 @@ import { HOST_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
-const axiosInstance = axios.create({ baseURL: HOST_API });
+const axiosInstance = axios.create({
+  baseURL: HOST_API,
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }
+});
 
 axiosInstance.interceptors.request.use((config) => {
   const access_token = localStorage.getItem('access_token'); // Assuming you store the access token in localStorage after login

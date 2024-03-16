@@ -17,6 +17,7 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 import { IUserItem } from 'src/types/user';
 import { IEmployeeItem } from 'src/types/employee';
+import { HOST_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +48,7 @@ export default function EmployeeTableRow({
 
 
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar alt={first_name} src={`https://vdreamentertainment.com/${image}`} sx={{ mr: 2 }} />
+          <Avatar alt={first_name} src={`${HOST_API}/${image}`} sx={{ mr: 2 }} />
 
           <Typography variant="subtitle2">{first_name} {last_name}</Typography>
         </TableCell>

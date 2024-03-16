@@ -36,7 +36,7 @@ export default function StoreItem({ item }: Props) {
   return (
     <div>
       <Link href={link_youtube} passHref target='_blank'>
-        <Image src={`https://vdreamentertainment.com/${image}`} alt={name_en} ratio='1/1' sx={{ borderRadius: 2 }} />
+        <Image src={`${HOST_API}/${image}`} alt={name_en} ratio='1/1' sx={{ borderRadius: 2 }} />
       </Link>
       <Stack spacing={1} sx={{ pt: 2.5, px: 2.5 }}>
         <Typography variant="overline" sx={{ color: 'text.disabled' }}>

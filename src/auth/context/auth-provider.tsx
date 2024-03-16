@@ -133,7 +133,7 @@ export function AuthProvider({ children }: Props) {
       username,
       password,
     };
-
+    console.log(endpoints.auth.login);
     const res = await axios.post(endpoints.auth.login, data);
 
     const { access_token } = res.data;

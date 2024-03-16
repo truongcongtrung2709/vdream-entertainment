@@ -9,6 +9,7 @@ import { useTranslate } from 'src/locales';
 import Image from 'src/components/image';
 import { useGetAbouts } from 'src/api/about';
 import HomeDetailsDescription from './home-details-description';
+import { HOST_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -61,7 +62,7 @@ export default function HomeAbout() {
         (
           <Image
             alt="landing about"
-            src={`https://vdreamentertainment.com/${aboutsData?.image}`}
+            src={`${HOST_API}/${aboutsData?.image}`}
             ratio="16/9"
             sx={{
               borderRadius: 1.5,

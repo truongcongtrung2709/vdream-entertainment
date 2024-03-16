@@ -16,6 +16,7 @@ import { Stack } from '@mui/material';
 import { useRef } from 'react';
 import { useBoundingClientRect } from 'src/hooks/use-bounding-client-rect';
 import HomeDetailsDescription from './home-details-description';
+import { HOST_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -62,7 +63,7 @@ export default function HomeHero() {
                 visibleByDefault
                 disabledEffect
                 alt="marketing market"
-                src={`https://vdreamentertainment.com/${introduceData?.image}`}
+                src={`${HOST_API}/${introduceData?.image}`}
               />
             </Grid>
           )}
@@ -89,7 +90,7 @@ export default function HomeHero() {
                 visibleByDefault
                 disabledEffect
                 alt="marketing market"
-                src={`https://vdreamentertainment.com/${introduceData?.image}`}
+                src={`${HOST_API}/${introduceData?.image}`}
               />
             </Grid>
           )}
