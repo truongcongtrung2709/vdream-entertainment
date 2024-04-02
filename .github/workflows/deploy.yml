@@ -20,4 +20,4 @@ jobs:
           
       - name: Update server
         run: |
-          ssh -o StrictHostKeyChecking=no -p 22 trung@45.76.144.49 "cd vdream-entertainment && git pull && yarn install && yarn build && pm2 restart vdream"
+          ssh -o StrictHostKeyChecking=no -p 22 trung@45.76.144.49 "cd vdream-entertainment && export NODE_OPTIONS=--max-old-space-size=4096 && git pull && yarn install && yarn build && pm2 restart vdream"
