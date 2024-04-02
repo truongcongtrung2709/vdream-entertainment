@@ -16,7 +16,7 @@ jobs:
       - name: Install SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: SHA256:aiilFp9pfGzRGgAw4Qx9o1qgEzNIgaVu//o4Gp3OrzI
+          ssh-private-key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHZJsSti57RsLMLoebv4AiOwa6/jZPNm94UgrWQUDc4N truongcongtrung2709@gmail.com
 
       - name: Update server
         run: |
