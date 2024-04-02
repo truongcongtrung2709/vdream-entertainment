@@ -16,11 +16,7 @@ jobs:
       - name: Install SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
-QyNTUxOQAAACB2SbErYue0bCzC6Hm7+AIjsGuv42TzZveFIK1kFA3ODQAAAKB+y9gyfsvY
-MgAAAAtzc2gtZWQyNTUxOQAAACB2SbErYue0bCzC6Hm7+AIjsGuv42TzZveFIK1kFA3ODQ
-AAAEBQPogrg7jaVHjmlSZQ7mZPfDYmo/3PUiPyoHYWdD1unXZJsSti57RsLMLoebv4AiOw
-a6/jZPNm94UgrWQUDc4NAAAAHXRydW9uZ2Nvbmd0cnVuZzI3MDlAZ21haWwuY29t
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Update server
         run: |
