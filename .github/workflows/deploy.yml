@@ -17,7 +17,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
+          
       - name: Update server
         run: |
           ssh -o StrictHostKeyChecking=no -p 22 trung@45.76.144.49 "cd vdream-entertainment && git pull && yarn install && yarn build && pm2 restart vdream"
