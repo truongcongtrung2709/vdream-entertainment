@@ -4,8 +4,8 @@
 import HomeView from "src/sections/home/view/home-view";
 
 export const metadata = {
-  title: 'VDream Entertainment',
-  description: 'VDream Entertainment',
+  title: 'VDream-Entertainment',
+  description: 'VDream-Entertainment',
   themeColor: '#000000',
   viewport: { width: 'device-width', initialScale: 1, maximumScale: 1 },
   icons: [
