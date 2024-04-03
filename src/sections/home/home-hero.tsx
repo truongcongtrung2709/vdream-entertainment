@@ -29,7 +29,6 @@ export default function HomeHero() {
 
   const mdUp = useResponsive('up', 'md');
 
-
   const introduceData = introduces.length > 0 ? introduces[0] : null;
 
   if (!introduceData) {
@@ -56,7 +55,18 @@ export default function HomeHero() {
         }}
       >
         <Grid container columnSpacing={{ xs: 0, md: 10 }}>
-          {displayImage && (
+          {mdUp && displayImage && (
+            <Grid xs={12}>
+              <Image
+                width="100%"
+                visibleByDefault
+                disabledEffect
+                alt="marketing market"
+                src={`${HOST_API}/${introduceData?.image}`}
+              />
+            </Grid>
+          )}
+          {!mdUp && (
             <Grid xs={12}>
               <Image
                 width="100%"
@@ -71,18 +81,17 @@ export default function HomeHero() {
             xs={12}
             md={displayImage ? 12 : 6}
             lg={displayImage ? 12 : 5}
-
           >
-            <Typography variant="h1" sx={{ my: 3, textAlign: displayImage ? "center" : "left" }}>
+            <Typography variant="h1" sx={{ my: 3, textAlign: displayImage || !mdUp ? "center" : "left" }}>
               {langStorage === 'vi' ? introduceData?.title_vi : introduceData?.title_en}
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
+            <Box sx={{ color: 'text.secondary' }}>
               {langStorage === 'vi' ? (
                 <HomeDetailsDescription description={introduceData?.describe_vi} />
               ) : (
                 <HomeDetailsDescription description={introduceData?.describe_en} />
               )}
-            </Typography>
+            </Box>
           </Grid>
           {mdUp && !displayImage && (
             <Grid xs={12} md={6} lg={7}>

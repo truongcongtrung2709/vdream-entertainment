@@ -10,6 +10,7 @@ import Image from 'src/components/image';
 import { useGetAbouts } from 'src/api/about';
 import HomeDetailsDescription from './home-details-description';
 import { HOST_API } from 'src/config-global';
+import { Box } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -49,13 +50,13 @@ export default function HomeAbout() {
           }
         </Typography>
 
-        <Typography sx={{ color: 'text.secondary' }}>
+        <Box sx={{ color: 'text.secondary' }}>
           {langStorage === "vi" ?
             <HomeDetailsDescription description={aboutsData?.describe_vi} />
             :
             <HomeDetailsDescription description={aboutsData?.describe_en} />
           }
-        </Typography>
+        </Box>
       </Grid>
       {!aboutsData?.image ?
         <></> :
