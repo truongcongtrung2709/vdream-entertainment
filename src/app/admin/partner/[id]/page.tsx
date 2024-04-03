@@ -4,7 +4,7 @@ import { CollaboratorEditView } from 'src/sections/dashboard/collaborator/view';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Dashboard: Collaborator Edit',
+  title: 'V-Dream Entertainment',
 };
 
 type Props = {

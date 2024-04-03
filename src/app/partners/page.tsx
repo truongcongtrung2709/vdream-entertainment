@@ -3,7 +3,7 @@ import CollaborationView from 'src/sections/_collaboration/view/collaboration-vi
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Dream: Đối Tác',
+  title: 'V-Dream Entertainment',
 };
 
 export default function CollaborationPage() {

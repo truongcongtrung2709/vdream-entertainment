@@ -4,7 +4,7 @@
 import { CollaboratorCreateView } from "src/sections/dashboard/collaborator/view";
 
 export const metadata = {
-  title: 'Dashboard: Create a new collaborator',
+  title: 'V-Dream Entertainment',
 };
 
 export default function UserCreatePage() {

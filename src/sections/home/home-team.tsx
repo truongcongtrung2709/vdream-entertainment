@@ -35,12 +35,10 @@ export default function HomeTeam({ members }: Props) {
         }}
       >
         <Typography component="div" variant="overline" sx={{ color: 'text.disabled' }}>
-          {t("Đội ngũ")}
+          Talents
         </Typography>
 
-        <Typography variant="h2" sx={{ my: 3, width: { md: 500 } }}>
-          {t("Đội ngủ trẻ trung, tài năng và nhiệt quyết")}
-        </Typography>
+
       </Grid>
 
       <Box

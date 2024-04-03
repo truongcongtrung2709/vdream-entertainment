@@ -4,7 +4,7 @@ import { StoreEditView } from 'src/sections/dashboard/store/view';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Dashboard: Product Edit',
+  title: 'V-Dream Entertainment',
 };
 
 type Props = {

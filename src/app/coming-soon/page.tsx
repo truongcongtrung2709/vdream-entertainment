@@ -3,7 +3,7 @@ import ComingSoonView from 'src/sections/coming-soon/view';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Coming Soon',
+  title: 'V-Dream Entertainment',
 };
 
 export default function ComingSoonPage() {

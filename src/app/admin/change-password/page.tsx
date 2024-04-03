@@ -5,7 +5,7 @@ import ChangePasswordView from "src/sections/dashboard/change-password/change-pa
 
 
 export const metadata = {
-  title: 'Dashboard: Account Settings',
+  title: 'V-Dream Entertainment',
 };
 
 export default function AccountPage() {

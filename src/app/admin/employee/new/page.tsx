@@ -5,7 +5,7 @@
 import { EmployeeCreateView } from "src/sections/dashboard/employee/view";
 
 export const metadata = {
-  title: 'Dashboard: Create a new user',
+  title: 'V-Dream Entertainment',
 };
 
 export default function UserCreatePage() {

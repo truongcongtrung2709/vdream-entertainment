@@ -4,7 +4,7 @@ import { IntroductionView } from "src/sections/dashboard/introduction/view";
 
 
 export const metadata = {
-  title: 'Dashboard: VDream',
+  title: 'V-Dream Entertainment',
 };
 
 export default function HomePage() {

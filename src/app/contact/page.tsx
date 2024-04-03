@@ -3,7 +3,7 @@ import ContactView from 'src/sections/_contact/view/contact-view';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Dream: Đối Tác',
+  title: 'V-Dream Entertainment',
 };
 
 export default function ContactPage() {

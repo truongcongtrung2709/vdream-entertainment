@@ -4,7 +4,7 @@ import { StoreListView } from "src/sections/dashboard/store/view";
 
 
 export const metadata = {
-  title: 'Dashboard: User Profile',
+  title: 'V-Dream Entertainment',
 };
 
 export default function UserProfilePage() {

@@ -5,7 +5,7 @@ import { EmployeeEditView } from 'src/sections/dashboard/employee/view';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Dashboard: User Edit',
+  title: 'V-Dream Entertainment',
 };
 
 type Props = {

@@ -3,7 +3,7 @@ import { AboutUsView } from 'src/sections/about-us/view';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Dashboard: About',
+  title: 'V-Dream Entertainment',
 };
 
 export default function OverviewAppPage() {

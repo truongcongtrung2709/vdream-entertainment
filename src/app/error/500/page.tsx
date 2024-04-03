@@ -3,7 +3,7 @@ import { View500 } from 'src/sections/error';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: '500 Internal Server Error',
+  title: 'V-Dream Entertainment',
 };
 
 export default function Page500() {

@@ -3,7 +3,7 @@ import LoginView from 'src/sections/auth/login/login-view';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Vdream: Login',
+  title: 'V-Dream Entertainment',
 };
 
 export default function LoginPage() {

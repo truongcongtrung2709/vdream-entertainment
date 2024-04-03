@@ -3,7 +3,7 @@ import { View403 } from 'src/sections/error';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: '403 Forbidden',
+  title: 'V-Dream Entertainment',
 };
 
 export default function Page403() {
